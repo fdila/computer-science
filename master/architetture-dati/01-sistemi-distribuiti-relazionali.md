@@ -209,7 +209,7 @@ Bisogna scegliere se ottimizzare:
 Nel trasferire i dati da un nodo all'altro perdiamo gli indici, quindi join diventa molto costoso. Definiamo l'operazione di **semijoin**: 
 
 $$
- R semijoin_A S \equiv \pi_{R^*}(Rjoin_AS)
+R semijoin_A S \equiv \pi_{R^*}(Rjoin_AS)
 $$
 
 Scelgo quindi di tenere solo gli attributi di R dopo il semijoin.
@@ -361,7 +361,13 @@ Quindi il protocollo diventa:
 
 Protocollo ovviamente centralizzato per come lo abbiamo visto (TM "master"), TM collo di bottiglia
 
-Utile solo per reti senza broadcast.
+Versione lineare: 
+
+- Tm comunica per primo con primo RM
+
+- primo rm comunica con secondo rm e così via
+
+- tm comunica con ultimo rm
 
 Versione distribuita:
 
@@ -373,7 +379,7 @@ Versione distribuita:
 
 - Non serve seconda fase 2pc
 
-###### 2pc in caso di guasto
+###### 2pc (centralizzato) in caso di guasto
 
 - un RM nello stato di ready perde la sua autonomia e aspetta TM
 
@@ -381,10 +387,156 @@ Versione distribuita:
 
 Guasti di componenti:
 
-- protocolli di terminazione
+- protocolli di terminazione -> assicura terminazione
 
-- protocolli di recovery
+- protocolli di recovery -> assicura ripristino
 
-SEND HELP
+Protocolli di terminazione con guasto di un rm:
+
+- RM cade prima del prepare
+  
+  - TM dopo timeout fa ABORT
+
+- RM cade dopo aver risposto commit/abort
+  
+  - RM quando si riprende sa cosa ha scritto lui, se si trova in ready si mette in attesa
+  
+  - RM chiede cosa fare a TM
+  
+  - TM rimanda decisione abort/commit 
+
+Protocolli di terminazione con guasto del tm:
+
+- TM cade nella fase di prepare
+  
+  - RM dopo un timeout fanno abort
+
+- TM cade dopo:
+  
+  - gli RM si possono mettere d'accordo tra di loro per capire cosa fare (algoritmi bizantini)
+  
+  - Variamo comportamento in base a ultimo log in TM:
+    
+    - Se ultimo log è prepare:
+      
+      - TM può decidere di fare global abort 
+      
+      - oppure ripetere la prima fase sperando di giungere a global commit.
+    
+    - se ultimo log è global-commit o global-abort:
+      
+      - TM ripete seconda fase
+    
+    - se ultimo log è una complete
+      
+      - va tutto bene e TM non fa nulla.
+
+Protocolli di ripristino con caduta di un RM:
+
+- nel file di log c'è scritto abort o commit:
+  
+  - tutto come sistemi centralizzati
+
+- nel file di log l'ultimo messagio è ready:
+  
+  - RM si blocca perchè non sa la decisione di TM
+  
+  - 2 casi:
+    
+    - RM chiede a TM cosa fare (richiesta di remote recovery)
+    
+    - RM aspetta che TM riesegua la seconda fase del protocollo.
+
+Perdita di messaggi e partizionamento della rete
+
+TM non è in grado di distinguere se è morto RM o se si è perso il messaggio, in entrambi i casi decide abort.
+
+Anche nel caso di perdita di ack la seconda fase viene ripetuta a seguito di timeout
+
+##### Ottimizzazioni di 2pc
+
+Ridurre numero messaggi.
+
+Su un RM vede che le sue operazioni sono read-only e poi finisce protocollo.
+
+"scordarsi abort, ricordarsi i commit": se decido di fare abort abbandona la transazione e bon. Gli unici record nel log sono global commit, ready e commit.
+
+##### Protocollo xopen DTP
+
+Architettura di venditori che si sono messi d'accordo, ci sono sempre RM e TM.
+
+Si interagisce con API standard.
+
+
+
+## Repliche
+
+Ogni vendor ha le sue tecnologie.
+
+Replica è il processo di mantenere varie istanze dello stesso di db allineate tra di loro.
+
+Sincronizzazione: processo per tenere allineate le varie copie "eventually"
+
+Replica sincrona vs asincrona:
+
+- sincrona: come ROWA, appena modifico qualcosa sincronizzo su tutte le repliche e poi completo la transazione
+
+- asincrono: faccio con calma dopo aver finito la transazione.
+
+Vari contesti a cui pensare alla replica:
+
+- condivisione dati tra utenti tra loro scollegati, si ha merge conflict
+
+- data consolidation, quando un'azienda vuole tenere più copie dei dati in vari punti
+
+- data distribution, caso degli e-commerce.
+
+- prestazioni, accesso efficiente, load balancing e accesso offline: ad esempio sito vetrina.
+
+- separare tra data entry e reporting
+
+- coesistenza di applicazioni che hanno bisogni di trasformazioni di dati complesse.
+
+Casi in cui non si dovrebbe replicare:
+
+- se ci sono frequenti update su più copie
+
+- quando la consistenza è critical, solitamente si usa ROWA.
+
+Benefici:
+
+- disponibilità
+
+- reliability
+
+- performance
+
+- load reduction
+
+- disconnected computing
+
+- supports many users
+
+Tipologie:
+
+- Data distribution, 1:many ho db centrale che distribuisce le varie copie passive, che vedono soltando i dati
+
+- P2P, posso gestire con ROWA
+
+- Data consolidation, many:1 vari db conosolidati a livello centrale
+
+- Bi direzionale: copia primaria e copia secondaria (P2P con due soli peer)
+
+- Multi-staging
+
+Come realizzare replica:
+
+- Prendo l'hdd e lo copio da un'altra parte, lo copio e lo rimetto al suo posto
+
+- Faccio backup totale
+
+- Faccio backup incrementale, ovvero faccio prima un backup full, poi avrò il log e trasferisco solo log.
+
+- Event publishing (soluzione microsoft)
 
 
