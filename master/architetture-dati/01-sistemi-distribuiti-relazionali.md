@@ -359,6 +359,8 @@ Quindi il protocollo diventa:
   
   - TM scrive su log
 
+![](img/2pc.png)
+
 Protocollo ovviamente centralizzato per come lo abbiamo visto (TM "master"), TM collo di bottiglia
 
 Versione lineare: 
@@ -377,7 +379,7 @@ Versione distribuita:
 
 - Ogni RM decide in base ai voti che ascolta dagli altri
 
-- Non serve seconda fase 2pc
+- Non serve seconda fase 2p
 
 ###### 2pc (centralizzato) in caso di guasto
 
@@ -467,8 +469,6 @@ Architettura di venditori che si sono messi d'accordo, ci sono sempre RM e TM.
 
 Si interagisce con API standard.
 
-
-
 ## Repliche
 
 Ogni vendor ha le sue tecnologie.
@@ -538,5 +538,3 @@ Come realizzare replica:
 - Faccio backup incrementale, ovvero faccio prima un backup full, poi avrò il log e trasferisco solo log.
 
 - Event publishing (soluzione microsoft)
-
-
