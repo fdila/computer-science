@@ -142,7 +142,7 @@ Meccanismo di elezione:
 
 - se un nodo non sente l'heartbeat del master viene indetta elezione
 
--  livelli di priorità sui secondary
+- livelli di priorità sui secondary
 
 - il nodo in cima viene eletto primary
 
@@ -208,14 +208,58 @@ Uso lock ??
 
 - exclusive (X) per le scritture
 
-- intent shared
+- intent shared (IS)
 
-- intent exclusive
-
-
+- intent exclusive (IX)
 
 CouchDB esiste, e poco altro.
 
 ## Graph DB
+
+Modello più ricco e complesso tra i NoSQL.
+
+Con grafi si evita il problema del join-bombing.
+
+Abbiamo descrizione estensionale dei dati (un po' come in tutti i nosql n.d.r.)
+
+Ogni nodo può avere un set di attributi diverso (proprietà). I nodi sono collegati tra di loro con archi. Sia nodi che archi possono avere proprietà.
+
+Due tipi di approccio:
+
+- graph processing: ci si concentra sul processamento dei dati eseguito tramite grafi
+
+- graph storage: dati memorizzati in forma di grafo
+
+In entrambi i casi si possono fare le cose in modo:
+
+- nativo (ad esempio per lo storage vengono salvati i grafi, come in neo4j)
+
+- non-nativo (ad esempio per lo storage si converte prima in un altro formato, rischiamo comunque join-bombing).
+
+I grafi scalano male e non possono essere facilmente frammentati.
+
+### Neo4j
+
+Sia graph storage che graph processing nativi.
+
+Linguaggio di query -> Cypher
+
+Il risultato di una query non è sempre un grafo: può, ad esempio, essere una tabella. Per questo motivo non si possono concatenare query
+
+Garantisce:
+
+- transazioni con proprietà ACID, tramite meccanismi di locking
+
+- disponibilità
+
+- recoverability
+
+Le performance non dipendono dalla grandezza del dataset ma dalla query.
+
+## Modelli poliglotta
+
+## Modello key-value
+
+## Modello wide column
 
 
