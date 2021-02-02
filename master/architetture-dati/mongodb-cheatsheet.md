@@ -28,7 +28,6 @@ collection.find({}, {'a':1, 'b':1})
 
 #trova e ordina per attributo ascendente
 collection.find().sort('a', 1)
-
 ```
 
 **Operatori di comparazione**
@@ -75,10 +74,111 @@ collection.find({'cose': {'$exists': 'false'}})
 collection.find({'cose': {'$type': 'int'}})
 ```
 
+**Evaluation operators**
+
+```python
+# aggregation expression
+$expr
+# regex
+$regex
+# text
+$text
+```
+
+**Operatori geospaziali**
+
+```python
+$geoIntersect
+$geo
+$near
+$nearSphere
+```
+
+**Operatori su array**
+
+```python
+# contiene tutti gli elementi specificat
+$all
+# contiene gli elementi?
+$elem
+# se size array è uguale
+$size
+```
+
 **Contare**
 
 ```python
 collection.find().count()
+```
+
+**Aggregazione**
+
+```python
+collection.aggregate{[
+    {$group:
+        {
+          _id: <expression>, // Group By Expression (ex. $nome_attributi    )
+          <field1>: { <accumulator1> : <expression1> },
+        }    
+    }
+    { $match: {
+        "attributo": 10
+      }
+    }
+    { $project: {"_id": 0, "attr:" 1}}
+    { $count: "n_cose"}
+    { $limit: 100}
+    { $sort: {"att10",1}}
+      
+  ]
+}
+
+```
+
+```python
+$avg
+$first
+$last
+$max
+$mix
+$sum
+```
+
+**Relazioni con reference**
+
+```python
+collection1.aggregate([
+    {  '$lookup' : {
+            from: "collection2",
+            localField: "id_coso",
+            foreignField: "id",
+            as: "nome_coso"         
+        }
+    }
+])
+```
+
+**Indici**
+
+```python
+collection.create_index([("attributo", pymongo.DESCENDING)])
+```
+
+**Operazioni di update**
+
+```python
+collection.updateOne()
+collection.updateMany()
+collection.replaceOne()
+collection.update()
+```
+
+**Operazioni di delete**
+
+```python
+collection.deleteOne()
+collection.deleteMany()
+collection.remove()
 ```
 
 
