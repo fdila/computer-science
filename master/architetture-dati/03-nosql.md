@@ -310,8 +310,78 @@ Protocollo ROWA oppure coordinator decide di scrivere solo su copia primaria e p
 
 **Cluster to cluster**
 
-Prendo un cluster e lo copio su altro cluster. Replica one-way.
+Prendo un cluster e lo copio su altro cluster. Replica one-way. Uso code come kafka.
 
 ## Modello key-value
 
+Modello molto semplice dove si hanno righe con chiave e valore. I valori sono considerati come blob, il db non è in grado di interpretarli e farci query.
+
+Accesso veloce tramite strutture di hash e scalabilità orizzontale.
+
+### Redis
+
+Offre blob strutturati per memorizzare i dati (ad esempio json o video in streaming?)
+
+Sharding:
+
+- partizionamento per chiavi
+
+- con una regex?
+
+Placement:
+
+- Dense: uso lo shard fino a che ha memoria
+
+- Sparse: uso il massimo numero di nodi sempre
+
+Repliche:
+
+- Redis replica of setup (solito con repliche read-only)
+
+- Active-active setup (più cluster read/write in prarallelo)
+
+Modello in-memory
+
 ## Modello wide column
+
+A metà tra key-value e documentale.
+
+### Big table
+
+Google. Mappa multidimensionale ordinata, persistente e sparsa.
+
+Per una tabella ho varie column family, in ogni column family ci sono più colonne.
+
+Non è facile fare query.
+
+### Hbase
+
+Evoluzione di Big Table.
+
+Hadoop.
+
+Architettura master/slave:
+
+- HBaseMaster
+
+- HBaseRegion: sottoinsieme delle righe
+
+HDFS, Zookeeper?
+
+### Cassandra
+
+Lei si definisce key-value, a noi non interessa come si identificano le cose e la trattiamo come wide column.
+
+Una riga è una collezione di colonne.
+
+Cassandra Query Language, simile a sql
+
+ Architettura distribuita p2p, tipo dht. No single point of failure.
+
+All'interno struttura ad anello su chiave hash, partizionamento si basa su questo.
+
+Protocollo di gossip per location disovery e state information.
+
+## Modello RDF
+
+Maurino lo dà per scontato :)
