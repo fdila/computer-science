@@ -258,8 +258,60 @@ Le performance non dipendono dalla grandezza del dataset ma dalla query.
 
 ## Modelli poliglotta
 
+Può gestire più modelli insieme
+
+### ArangoDB
+
+Modelli supportati:
+
+- key value
+
+- documentali
+
+- a grafo
+
+- ricerca full-text
+
+Linguaggio query **AQL (Arango Query Language)**: posso scrivere query come json, a grafo, in formato key-value o full-text search.
+
+Ho documenti.
+
+Connessioni tra documenti chiamata "edges", con attributi "_from" e "_to".
+
+Vari metodi di scalabilità:
+
+- singola istanza
+
+- master/slave
+
+- active failover
+
+- cluster
+
+- multiple datacenters
+
+**Active failover**
+
+Nel modello master/slave se master fallisce slave muore tutto.
+
+Qui abbiamo leader e followers e agency.
+
+Agency guarda config di leader e followers.
+
+Se un leader non è più disponibile agency promuove un follower a leader.
+
+**Cluster**
+
+Ho più coordinator che si connettono ai client, coordinator si connettono ai db.
+
+Sharding avviene in partizioni. Ho uno shard con repliche degli altri shard.
+
+Protocollo ROWA oppure coordinator decide di scrivere solo su copia primaria e prima o poi scrive anche su gli altri nodi.
+
+**Cluster to cluster**
+
+Prendo un cluster e lo copio su altro cluster. Replica one-way.
+
 ## Modello key-value
 
 ## Modello wide column
-
-
