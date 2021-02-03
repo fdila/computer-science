@@ -1,12 +1,48 @@
 # Architetture di integrazione
 
-Unire in qualche modo diversi dataset.
+Integrazione -> Unire in qualche modo diversi dataset.
 
 Distinguiamo:
 
-- data integration: diversi set di dati con attributi diversi. costruisco unico insieme con tutti gli elementi dei due insiemi. 
+- data integration: diversi set di dati con attributi diversi. costruisco unico insieme con tutti gli elementi dei due insiemi.
 
 - data enrichment: arricchire un set di dati con alcuni dati di altri insiemi, qualora possibile.
+
+## Architetture per data integration
+
+Due tecniche:
+
+- Consolidation: raccolgo dataset, li integro e li salvo in un nuovo db, che sarà la nuova architettura dati
+
+- Virtual Data Integration: non memorizzo i risultati dell'integrazione ma dò la possibilità agli utenti di fare query sui dati integrati. Si produce quindi un nuovo schema globale che comunica tramite un mediatore software per prendere i dati dai db "vecchi".
+
+Due approcci:
+
+- integrated read-only views (Mediation): integrazione solo in lettura
+
+- integrated read-write views (mediation with update): difficile e poco studiata.
+
+Tre elementi fondamentali in un'architettura di data integration:
+
+- Global Schema
+
+- Varie sorgenti
+
+- Mapping tra sorgenti e GS
+
+Due componenti fondamentali:
+
+- mediator: data una query la frammenta e la riscrive per poter lavorare sugli schemi locali. Inoltre mette insieme i vari risultati, risolve i conflitti e risponde alle query
+
+- vari wrapper: agganciano ogni schema locale al GS, rappresentando la sorgente in uno schema compatibile con GS.
+
+Approcci per costruire il Global Scheme:
+
+- GAV (Global As View): creo schema globale sulla base dell'osservazione degli schemi sorgente.
+
+- LAV (Local As View): lo schema globale viene progettato a priori indipendentemente dagli schemi locali, dai quali verranno prese soltanto le informazioni di interesse.
+
+- GLAV (Global and Local As View): mapping dato da insieme di viste, alcune sullo schema globale altre sulle sorgenti.
 
 ## Data integration
 
@@ -143,14 +179,6 @@ Per la fusione si può quindi:
 - cercare di evitare i conflitti basandosi su metadati, sorgente o istanze
 
 - gestire i conflitti tramite funzioni di risoluzione dei conflitti
-
-## Architetture per data integration
-
-
-
-
-
-
 
 
 
