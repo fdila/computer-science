@@ -129,10 +129,9 @@ collection.aggregate{[
     { $count: "n_cose"}
     { $limit: 100}
     { $sort: {"att10",1}}
-      
+
   ]
 }
-
 ```
 
 ```python
@@ -180,5 +179,3 @@ collection.deleteOne()
 collection.deleteMany()
 collection.remove()
 ```
-
-
