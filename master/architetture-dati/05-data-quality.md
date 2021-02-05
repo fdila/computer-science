@@ -144,10 +144,8 @@ Con la **data preparation** facciamo cose:
 
 Tipi di conflitti:
 
-- intra-source: stessa informazione nello stesso sorgente rappresentatain modo diverso
+- intra-source: stessa informazione nello stesso sorgente rappresentata in modo diverso
 
 - inter-source: stessa informazione in sorgenti diversi.
-
-
 
 
