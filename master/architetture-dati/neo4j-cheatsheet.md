@@ -49,6 +49,35 @@ MATCH (s:Supplier)-[:SUPPLIES]->(:Product)-[:PART_OF]->(c:Category)
 RETURN s.companyName as Company, collect(distinct c.categoryName) as Categories
 ```
 
+Ordinare risultati
 
+```
+MATCH (p:Person {gender:"F", lastName: "Colombo"}) 
+RETURN p.firstName ORDER BY p.firstName ASC
+```
+
+Usare cose di aggregazione nel WHERE
+
+```
+MATCH (b:Book)<-[r:Wrote]-(p:Author) 
+WITH b, count(r) as cnt WHERE cnt>=3 RETURN b.title, cnt
+```
+
+Creare nodo con attributi
+
+```
+CREATE(p1:Person {name:"John", age:27})
+```
+
+Creare relazione
+
+```
+CREATE (john)-[:Knows{since: "01/09/2013"}]->(sally)
+```
+
+```
+MATCH (sally:Person {name: "Sally"}), (john:Person {name: "John"}) 
+CREATE (john)-[:friend_of {date: "01/09/2013"}]->(sally)
+```
 
 
