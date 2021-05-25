@@ -38,16 +38,16 @@ Un cammino è bloccatp sse vale una delle 3 condizioni:
 
 1. Lungo il cammino esiste una variabile V tale che appartiene all'insieme E delle variabili con evidenza e gli archi che collegano V al cammino sono "tail to tail"
    
-   ![](/home/fdila/.config/marktext/images/06756d3daa60fc07cc02bb47f328fb5bcd63df1f.png)
+   ![](img/dsep1.png)
 
 2. Esiste una variabile V lungo il cammino tale che appartiene all'insieme E delle variabili con evidenza e gli archi che collegano V al cammino sono "tail to head"
    
-   ![](/home/fdila/.config/marktext/images/f70111259595e5e1c1b0f60dd26a0bd6bcd88fc9.png)
+   ![](img/dsep2.png)
 
 3. Esiste una variabile V sul cammino tale che NON appartiene all'insieme E delle variabili con evidenza, nessuno dei suoi discendenti appartiene all'insieme E delle variabili con evidenza e gli archi che collegano V al cammino sono "head to head"
    
-   ![](/home/fdila/.config/marktext/images/6783c175c1348bd0a87a81809a9d903548880119.png)
-   
-   ## Generazione di numeri casuali
-   
-   
+   ![](img/dsep3.png)
+
+## Generazione di numeri casuali
+
+
