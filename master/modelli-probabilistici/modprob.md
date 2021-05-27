@@ -46,7 +46,7 @@ Un cammino è bloccatp sse vale una delle 3 condizioni:
 
 3. Esiste una variabile V sul cammino tale che NON appartiene all'insieme E delle variabili con evidenza, nessuno dei suoi discendenti appartiene all'insieme E delle variabili con evidenza e gli archi che collegano V al cammino sono "head to head"
    
-   ![](img/dsep3.png)
+   <img title="" src="img/dsep3.png" alt="" width="639">
 
 ## Generazione di numeri casuali
 
@@ -182,5 +182,11 @@ $\pi = [\pi_1 \pi_2 \dots \pi_n]$
 $\pi = \pi \cdot P$
 
 Il comportamento di una catena di Markov prima di raggiungere la distribuzione di equlibrio è chiamato **transitorio**.
+
+PASSAGGIO INTERMEDIO TODO
+
+MATRICI TRANSIZIONE PER CATENE ASSORBENTI TODO
+
+## Hidden Markov Model
 
 
