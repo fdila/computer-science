@@ -123,6 +123,64 @@ $$
 
 ## Catene di Markov
 
+**Proprietà markoviana**: la distribuzione di probabilità per tutti i possibili valori futuri del processo dipende solo dal loro valore corrente e non dai valori passati o da altre informazioni correnti.
 
+$$
+P(X_{t+1} | X_t = i_t, X_{t-1} = i_{t-1}, \dots, X_1 = i_1, X_0 = i_0) = P(X_{t+1} = i_{t+1} | X_t = i_t)
+$$
+
+I processi stocastici che soddisfano questa proprietà sono detti **Processi di Markov**
+
+Se la probabilità di un certo evento è indipendente dal tempo t la catena di Markov si definisce **stazionaria** e si ha che 
+
+$$
+P(X_{t+1} = j | X_t = i) = p_{ij}
+$$
+
+$p_{ij}$: probabilità che al tempo t+1 il sistema sarà nello stato j, essendo nello stato i al tempo t.
+
+Uno stato $j$ è **raggiungibile** da uno stato $i$ se esiste un cammino che da $i$ arriva a $j$:
+
+$$
+P^n_{ij} > 0 
+$$
+
+Due stati $i$ e $j$ si dice che **comunicano** se $j$ è raggiungibile da $i$ e viceversa.
+
+Ogni stato comunica con se stesso per definizione e vale la proprietà transitiva.
+
+Una catena di Markov è detta **irriducibile** se tutti i suoi stati sono comunicanti tra di loro.
+
+Un insieme di stati $S$ di una catena di Markov è un **insieme chiuso** se nessuno stato fuori $S$ è raggiungibile dagli altri stati in $S$
+
+Uno stato $i$ si definisce **stato assorbente** se $p_{ii} = 1$.
+
+Uno stato $i$ si definisce **stato transiente** se esiste uno stato $j$ raggiungibile da $i$ ma $i$ non è raggiungibile da $j$
+
+Uno stato che non è transiente viene definito **stato ricorrente**.
+
+La ricorrenza è una proprietà di classe: se lo stato $i$ è ricorrente e lo stato *j* comunica con $i$ allora lo stato $j$ è ricorrente.
+
+Anche essere transiente è una proprietà di classe.
+
+Tutto gli stati di una catena di Markov **finita** (n. stati finito) irriducibile sono ricorrenti.
+
+Uno stato *i* è **periodico** di periodo $k>1$ se $k$ +è il più piccolo numero tale che tutti i cammini che dallo stato $i$ tornano ad $i$ hanno una lunghezza che è un multiplo di $k$
+
+Se uno stato non è periodico si definisce **aperiodico**
+
+Se tutti gli stati di una catena sono ricorrenti, aperiodici e comunicano l'uno con l'altro la catena si definisce **ergodica**
+
+**Distribuzione di equlibrio (steady state)**: Sia $P$ una matrice delle probabilità per una *catena ergodica* di N stati vale che:
+
+$$
+lim_{t\rightarrow +\inf} P_{ij}(t) = \pi_j
+$$
+
+$\pi = [\pi_1 \pi_2 \dots \pi_n]$
+
+$\pi = \pi \cdot P$
+
+Il comportamento di una catena di Markov prima di raggiungere la distribuzione di equlibrio è chiamato **transitorio**.
 
 
