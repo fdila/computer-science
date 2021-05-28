@@ -219,8 +219,6 @@ $$
 P(E_t|X{0:t-1}, E_{0:t-1}) = P(E_t | X_t)
 $$
 
-
-
 Per ogni t finito la distribuzione congiunta risulta:
 
 $$
@@ -275,14 +273,46 @@ Poi aggiorno con l'osservazione $P(X_{t+1} | e_{t+1},e_t) = \alpha P(e_{t+1}|X_{
 
 #### Previsione
 
+$$
+P(X_1 = x) = \sum_{x_0} P(X_1 = x | x_0)P(x_0)
+$$
 
+Algoritmo mini-forward.
+
+La predizione è un filtraggio privo dell'aggiunta di nuove osservazioni.
+
+**Calcolo verosimiglianza:**
+
+Possiamo usare una ricorsione per il calcolo della verosimiglianza di una sequenza di prove $P(e_{1:t})$
+
+Verosimiglianza di sequenze molto lunghe rischia underflow (numeri troppo piccoli)
+
+TODO (fersini maybe?)
 
 #### Smoothing
+
+$$
+P(X_k | e_{1:t}) \\
+
+
+per 1 \leq k < t
+$$
+
+Consideriamo separatamente le osservazioni fino a $k$ e quelle da $k+1$ a $t$
+
+$$
+P(X_k | e_{1:t}) = P(X_k | e_{1:k}, e_{k+1:t}) = \\
+\alpha P(X_k|e_{1:k})P(e_{k+1:t}|X_k, e_{1:k}) = \\
+\alpha P(X_k|e_{1:k})P(e_{k+1:t}|X_k) = \\
+\alpha f_{1:k}b_{k+1:t} 
+$$
+
+Algoritmo forward-backward.
+
+Procedura ricorsiva di backward che procede all'indietro da $t$
 
 
 
 #### Sequenza più probabile
-
-
 
 
