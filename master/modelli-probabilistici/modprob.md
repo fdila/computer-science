@@ -189,4 +189,100 @@ MATRICI TRANSIZIONE PER CATENE ASSORBENTI TODO
 
 ## Hidden Markov Model
 
+Modellare un mondo che evolve:
+
+- Un set $X_t$ di variabili di stato non osservabili al tempo $t$
+
+- Un set $E_t$ di variabili osservabili al tempo $t$
+
+- La dipendenza tra di esse
+
+- L'ipotesi che i cambiamenti del mondo siano regolati da un processo stazionario
+
+- Ipotesi di Markov del primo ordine
+
+Catena di Markov a stati nascosti è un processo stocastico caratterizzato da:
+
+- un insieme di stati $X_t$
+
+- un insieme di osservazioni $E_t$
+
+- Una matrice delle probabilità di transizione $P(X|X_{0:t-1}) = P(X|X_{t-1})$
+
+- Una matrice delle probabilità di emissione delle osservazioni $P(E_t | X_{0:t-1}, E_{0:t-1}) = P(E_t|X_t)$
+
+- Matrice delle probabilità iniziali degli stati al tempo 0 $P(X_0)$
+
+Modello sensoriale:
+
+$$
+P(E_t|X{0:t-1}, E_{0:t-1}) = P(E_t | X_t)
+$$
+
+
+
+Per ogni t finito la distribuzione congiunta risulta:
+
+$$
+P(X_0, X_1, \dots, X_t, E_1, \dots, E_t) = P(X_0)\prod^t_{i=1}P(X_i | X_{i-1})P(E_i|X_i)
+$$
+
+**<u>Task di inferenza nei modelli temporali:</u>**
+
+- **Filtraggio**: qual è la probabilità dell'evento al tempo t date le osservazioni da 0 a t?
+
+- **Previsione**: qual è la probabilità dell'evento al tempo t+n date le osservazioni da 0 a t?
+
+- **Smoothing**: qual è la probabilità dell'evento al tempo t-1 date le osservazioni da 0 a t?
+
+- **Spiegazione più probabile**: date le osservazioni, qual è la sequenza di stati più probabile?
+
+**<u>Apprendimento:</u>**
+
+- Apprendo il modello di transizione e del modello sensoriale a partire dalle osservazioni.
+
+- L'apprendimento si ottiene come sottoprodotto dell'inferenza: questa fornisce una stima che può essere utilizzata per aggiornare il modello (algoritmo Expectation-Maximization)
+
+- L'apprendimento richiede di effettuare uno smoothing completo.
+
+#### Filtraggio
+
+Calcolo a posteriori dello stato corrente date tutte le osservazioni
+
+$$
+P(X_t|e_{1:t})
+$$
+
+Stima ricorsiva! Date le distribuzioni fino al tempo $t-1$ si può calcolare la distribuzione al tempo $t$ della nuova prova $e_t$
+
+$$
+P(X_t|e_{1:t}) = f(e_t, P(X_{t-1}|e_{1:t-1}))
+$$
+
+Dato il risultato del filtraggio al tempo $t$ si proietta in avanti la distribuzione dello stato corrente da $t$ a $t+1$
+
+Si aggiorna in base alla nuova prova $e_{t+1}$
+
+$$
+P(X_{t+1}|e_{1:t+1} = P(X_{t+1}|e_{1:t}, e_{t+1})) = \\
+\alpha P(e_{t+1}|X_{t+1}, e_{1:t})P(X_{t+1}, e_{1:t}) = \\
+\alpha P(e_{t+1}|X_{t+1})P(X_{t+1}, e_{1:t})
+$$
+
+Quindi prima calcolo $P(X_{t+1} | e_{t}) = \sum_{x_t} P(X_{t+1}|x_t)P(x_t)$
+
+Poi aggiorno con l'osservazione $P(X_{t+1} | e_{t+1},e_t) = \alpha P(e_{t+1}|X_{t+1})P(X_{t+1} | e_{t})$
+
+#### Previsione
+
+
+
+#### Smoothing
+
+
+
+#### Sequenza più probabile
+
+
+
 
