@@ -331,4 +331,77 @@ Algoritmo forward-backward.
 
 Procedura ricorsiva di backward che procede all'indietro da $t$
 
+
+
 #### Sequenza più probabile
+
+
+
+### Altri filtraggi (Kalman & co.)
+
+##### Filtro di Kalman:
+
+Stimare lo stato di un sistema dinamico partendo da una sequenza di osservazioni rumorose.
+
+**Modello di transizione**: descrive la fisica del moto
+
+**Modello sensoriale**: descrive il processo di misurazione
+
+Il sistema è descritto da un insieme di variabili continue.
+
+Ho modello di transizione con aggiunta di rumore gaussiano, ottenendno un modello di transizione gaussiano lineare.
+
+Anche modello sensoriale è gaussiano lineare.
+
+Dopo aver aggiornato modello con predizione a un passo e aggiornamento rispetto alla nuova evidenza abbiamo sempre una distribuzione gaussiana lineare.
+
+Sono richieste 3 distribuzioni di probabilità:
+
+- belief iniziale $P(X_0)$, Kalman filter assume distribuzione dello stato iniziale gaussiana
+
+- probabilità della misura $P(Z_t|X_t)$, Kalman filter assume la distribuzione di misura gaussiana lineare
+
+- probabilità di transizione $P(X_t | X_{t-1})$, Kalman filter assume il sistema dinamico lineare
+
+###### Extended Kalman Filter:
+
+Le trasformazioni tra stati e misure raramente sono funzioni lineari.
+
+Probabilità di transizione tra stati e probabilità di misura regolate da funzioni non lineari $g$ e $h$
+
+$$
+x_t = g(u_t, x_{t-1}) + \varepsilon_t \\
+z_t = h(x_t) + \delta_t
+$$
+
+EKF calcola un'approssimazione di $g$ e $h$ con un'espansione di Taylor del primo ordine nel punto che è media della gaussiana approssimata allo step precedente.
+
+##### Filtri NON parametrici
+
+No assunzioni parametriche rigide sulla densità di probabilità a posteriori.
+
+Vanno molto bene per rappresentare belief multimodali.
+
+###### Histogram filter:
+
+Decompone lo spazio degli stati in un numero finito di regioni. Un istrogramma assegna a ciascuna regione una singola probabilità cumulata.
+
+###### Particle filter:
+
+Rappresentare la probabilità a posteriori $bel(x_t)$ attraverso un insieme di campionamenti random dello stato disegnati da questa probabilità.
+
+Particles: campioni di probabilità a posteriori $x_t^{[m]}$
+
+$$
+x_t = x_t^{[1]}, x_t^{[2]}, \dots,x_t^{[M]}
+$$
+
+Un particle è un'ipotesi su come potrebbe essere lo stato al tempo $t$
+
+Idealmente la likelihood dell'ipotesi di stato $x_t$, perchè sia inclusa tra i particles deve essere proporzionale alla probabilità a posteriori del suo filtro di Bayes:
+
+$$
+x_t^{[m]} \sim P(x_t | z_{1:t}, u_{1:t})
+$$
+
+Più una regione nello spazio degli stati è densa di campioni tanto è più probabile che il vero stato sia in quella regione.
