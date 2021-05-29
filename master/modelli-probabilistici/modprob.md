@@ -262,7 +262,7 @@ Dato il risultato del filtraggio al tempo $t$ si proietta in avanti la distribuz
 Si aggiorna in base alla nuova prova $e_{t+1}$
 
 $$
-P(X_{t+1}|e_{1:t+1} = P(X_{t+1}|e_{1:t}, e_{t+1})) = \\
+P(X_{t+1}|e_{1:t+1}) = P(X_{t+1}|e_{1:t}, e_{t+1})) = \\
 \alpha P(e_{t+1}|X_{t+1}, e_{1:t})P(X_{t+1}, e_{1:t}) = \\
 \alpha P(e_{t+1}|X_{t+1})P(X_{t+1}, e_{1:t})
 $$
@@ -309,6 +309,10 @@ Algoritmo mini-forward.
 
 La predizione è un filtraggio privo dell'aggiunta di nuove osservazioni.
 
+Faccio filtraggio fino al momento in cui ho osservazioni, poi moltiplico il risultato per la matrice di transizione elevata ad $m$.
+
+Ad esempio se ho $k$ osservazioni e voglio predire lo stato al tempo $n$, filtro con le $k$ osservazioni e moltiplico il risultato per la matrice di transizione elevata a $n-k$
+
 #### Smoothing
 
 $$
@@ -331,11 +335,39 @@ Algoritmo forward-backward.
 
 Procedura ricorsiva di backward che procede all'indietro da $t$
 
+3 passi:
 
+- Passo forward -> uguale a filtraggio.
+
+Calcolo da $f_0$ a $f_t$
+
+$f_0 = \pi$
+
+$f_1 = \alpha \cdot f_0 \cdot T \cdot E_{1}$
+
+...
+
+- Passo backward -> $P(e_{k+1:t}|x_k)$:
+
+Calcolo da $b_t$ a $b_0$
+
+$b_t = <1, 1>$
+
+$b_{t-1} = \alpha \cdot T \cdot E_{t-1} \cdot b_t$
+
+...
+
+- Passo di smooting -> prodotto delle due probabilità
+
+$\delta_1 = \alpha \cdot f_1 \cdot b_2$
+
+$\delta_2 = \alpha \cdot f_2 \cdot b_3$
+
+...
 
 #### Sequenza più probabile
 
-
+Algoritmo di Viterbi.
 
 ### Altri filtraggi (Kalman & co.)
 
