@@ -369,6 +369,14 @@ $\delta_2 = \alpha \cdot f_2 \cdot b_3$
 
 Algoritmo di Viterbi.
 
+Trellis
+
+Grafo con $n$ (numero di stati) rami, che a loro volta hanno $m$ (numero di osservazioni) figli, uno in fila all'altra.
+
+Calcolo le probabilità degli stati (ovvero di ogni nodo) come probabilitàPrecedente * probabilitàTransizione * probabilitàOsservazione.
+
+Una volta calcolati tutti scelgo il percorso migliore partendo dal fondo, andando via via a vedere qual è lo stato che più probabilmente mi ha portata lì.
+
 ### Altri filtraggi (Kalman & co.)
 
 ##### Filtro di Kalman:
