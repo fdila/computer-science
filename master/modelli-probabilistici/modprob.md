@@ -271,6 +271,34 @@ Quindi prima calcolo $P(X_{t+1} | e_{t}) = \sum_{x_t} P(X_{t+1}|x_t)P(x_t)$
 
 Poi aggiorno con l'osservazione $P(X_{t+1} | e_{t+1},e_t) = \alpha P(e_{t+1}|X_{t+1})P(X_{t+1} | e_{t})$
 
+#### Calcolo verosimiglianza:
+
+Possiamo usare una ricorsione per il calcolo della verosimiglianza di una sequenza di prove P(e_{1:t})
+
+Verosimiglianza di sequenze molto lunghe rischia underflow (numeri troppo piccoli)
+
+**Probabilità di una sequenza di stati:**
+
+Data sequenza $S$, 
+
+$$
+P(S) = \prod_{t=1}^{T-1} T_{t,t+1}
+$$
+
+Quindi parto da vettore delle prob iniziali, prendo la probabilità dell'elemento $s_o$  poi moltiplico $P(s_0)$ per $P(s_1|s_0)$ e così via per tutti gli stati.
+
+**Likelihood sequenza di osservazioni data sequenza di stati:**
+
+Data sequenza di osservazioni $E$ e sequenza di stati $S$
+
+$$
+P(E|S) = \prod^T_{i=1}P(e_i|s_i)
+$$
+
+**Likelihood della sequenza di stati e osservazioni:**
+
+Calcolo le due likelihood separatamente come sopra e le moltiplico
+
 #### Previsione
 
 $$
@@ -280,14 +308,6 @@ $$
 Algoritmo mini-forward.
 
 La predizione è un filtraggio privo dell'aggiunta di nuove osservazioni.
-
-**Calcolo verosimiglianza:**
-
-Possiamo usare una ricorsione per il calcolo della verosimiglianza di una sequenza di prove $P(e_{1:t})$
-
-Verosimiglianza di sequenze molto lunghe rischia underflow (numeri troppo piccoli)
-
-TODO (fersini maybe?)
 
 #### Smoothing
 
@@ -311,8 +331,4 @@ Algoritmo forward-backward.
 
 Procedura ricorsiva di backward che procede all'indietro da $t$
 
-
-
 #### Sequenza più probabile
-
-
