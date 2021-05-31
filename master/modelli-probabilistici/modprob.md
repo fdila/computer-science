@@ -79,7 +79,7 @@ $a, c \geq 0;  m> x_0, c , a$
 
 **Metodo acceptance-rejection:**
 
-TODO
+Genero campioni casuali e controllo se il campione è contenuto all'interno del plot della funzione della probabilità di densità.
 
 ## Reti bayesiane (inferenza approssimata)
 
@@ -183,9 +183,34 @@ $\pi = \pi \cdot P$
 
 Il comportamento di una catena di Markov prima di raggiungere la distribuzione di equlibrio è chiamato **transitorio**.
 
-PASSAGGIO INTERMEDIO TODO
+**Passaggio intermedio**: numero di transizioni attese prima di raggiungere lo stato $j$ essendo nello stato $i$ in una catena ergodica:
 
-MATRICI TRANSIZIONE PER CATENE ASSORBENTI TODO
+$$
+m_{ij} = 1 + \sum_{k\neq j} p_{ik} \cdot m_{kj} \\
+m_{ii} = 1/\pi_i
+$$
+
+**Matrice di transizione per catene assorbenti:**
+
+$$
+ 
+    \left(
+    \begin{array}{c|c}
+      Q & R\\
+      \hline
+      0 & I
+    \end{array}
+    \right)
+  
+$$
+
+$Q$ matrice che rappresenta le relazioni tra gli stati transienti
+
+$R$ matrice che rappresenta le transizioni da stati transienti a assorbenti
+
+Se siamo in uno stato transiente $i$, il numero di periodi che si trascorreranno in uno stato transiente $j$ prima dell'assorbimento nello stato è l'elemento $ij$-esimo elemento della matrice $(I-Q)^{-1}$
+
+Se siamo in uno stato transiente $i$, la probabilità di arrivare in uno stato assorbente $j$ è l'elemento $ij$-esimo della matrice $(I-Q)^{-1} \cdot R$
 
 ## Hidden Markov Model
 
