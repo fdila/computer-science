@@ -165,6 +165,8 @@ Anche essere transiente è una proprietà di classe.
 
 Tutto gli stati di una catena di Markov **finita** (n. stati finito) irriducibile sono ricorrenti.
 
+Una catena di Markov è **regolare** se esiste un $n$ tale che la matrice $P^n$ ha tutte le entry strettamente positive.
+
 Uno stato *i* è **periodico** di periodo $k>1$ se $k$ +è il più piccolo numero tale che tutti i cammini che dallo stato $i$ tornano ad $i$ hanno una lunghezza che è un multiplo di $k$
 
 Se uno stato non è periodico si definisce **aperiodico**
@@ -193,15 +195,14 @@ $$
 **Matrice di transizione per catene assorbenti:**
 
 $$
- 
-    \left(
+\left(
     \begin{array}{c|c}
       Q & R\\
       \hline
       0 & I
     \end{array}
     \right)
-  
+
 $$
 
 $Q$ matrice che rappresenta le relazioni tra gli stati transienti
