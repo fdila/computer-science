@@ -171,6 +171,8 @@ Uno stato *i* è **periodico** di periodo $k>1$ se $k$ +è il più piccolo numer
 
 Se uno stato non è periodico si definisce **aperiodico**
 
+Una catena è periodica se almeno uno stato è periodico.
+
 Se tutti gli stati di una catena sono ricorrenti, aperiodici e comunicano l'uno con l'altro la catena si definisce **ergodica**
 
 **Distribuzione di equlibrio (steady state)**: Sia $P$ una matrice delle probabilità per una *catena ergodica* di N stati vale che:
@@ -182,6 +184,10 @@ $$
 $\pi = [\pi_1 \pi_2 \dots \pi_n]$
 
 $\pi = \pi \cdot P$
+
+Questa proprietà è anche detta **teorema della convergenza**.
+
+Esiste anche il **teorema di esistenza e unicità**: se la catena di Markov è irriducibile e ricorrente positiva allora esiste un'unica distribuzione stazionaria.
 
 Il comportamento di una catena di Markov prima di raggiungere la distribuzione di equlibrio è chiamato **transitorio**.
 
