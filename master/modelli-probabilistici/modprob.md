@@ -305,7 +305,7 @@ Poi aggiorno con l'osservazione $P(X_{t+1} | e_{t+1},e_t) = \alpha P(e_{t+1}|X_{
 
 #### Calcolo verosimiglianza:
 
-Possiamo usare una ricorsione per il calcolo della verosimiglianza di una sequenza di prove P(e_{1:t})
+Possiamo usare una ricorsione per il calcolo della verosimiglianza di una sequenza di prove $P(e_{1:t})$
 
 Verosimiglianza di sequenze molto lunghe rischia underflow (numeri troppo piccoli)
 
