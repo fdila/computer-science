@@ -407,6 +407,8 @@ Grafo con $n$ (numero di stati) rami, che a loro volta hanno $m$ (numero di osse
 
 Calcolo le probabilità degli stati (ovvero di ogni nodo) come probabilitàPrecedente * probabilitàTransizione * probabilitàOsservazione.
 
+Per il primo step calcolo probabilitàIniziale * probabilitàOsservazione.
+
 Una volta calcolati tutti scelgo il percorso migliore partendo dal fondo, andando via via a vedere qual è lo stato che più probabilmente mi ha portata lì.
 
 ### Altri filtraggi (Kalman & co.)
