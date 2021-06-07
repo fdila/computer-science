@@ -34,7 +34,7 @@ Un nodo è condizionalmente indipendente dai nodi restanti data la conoscenza de
 
 **D-separazione**: X e Z sono d-separate da un insieme E di variabili con evidenza sse   ogni cammino non orientato da X e Z è bloccato.
 
-Un cammino è bloccatp sse vale una delle 3 condizioni:
+Un cammino è bloccato sse vale una delle 3 condizioni:
 
 1. Lungo il cammino esiste una variabile V tale che appartiene all'insieme E delle variabili con evidenza e gli archi che collegano V al cammino sono "tail to tail"
    
