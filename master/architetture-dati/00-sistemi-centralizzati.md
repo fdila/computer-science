@@ -46,8 +46,6 @@ Inoltre:
 
 **Query**
 
-
-
 Funzionalità cooperanti del dbms:
 
 - Query compiler che prende query in sql e traduce con un compilatore
@@ -114,8 +112,6 @@ Vari algoritmi per il controllo della concorrenza:
 
 - controllo basato su conflict equivalence
 
-- controllo di concorrenza basato sui *locks* (protocollo 2 phase locking). Si hanno tabelle di lock.
+- controllo di concorrenza basato sui *locks* (protocollo 2 phase locking). Si hanno tabelle di lock. In ogni transazione tutte le richieste di lock precedono tutti gli unlock.
 
 - controllo di concorrenza basato su timestamp
-
-

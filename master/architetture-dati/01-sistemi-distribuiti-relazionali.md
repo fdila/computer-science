@@ -96,16 +96,15 @@ Si hanno anche protocolli come **X-Open Distributed Transaction Processing (DTP)
 
 Diversi tipi di architetture:
 
-- shared everything:  db manager e disco sono in unico nodo
+- **shared everything**:  db manager e disco sono in unico nodo
 
-- shared-disk: + db manager su stessa Storage area network
+- **shared-disk**: + db manager su stessa Storage Area Network (Oracle RAC)
 
-- shared-nothing: ogni db management ha il suo disco.
+- **shared-nothing**: ogni db management ha il suo disco.
 
 Proprietà generali di un ddbms:
 
-- **località**: tendendo i dati vicino alle applicazioni che li usano miglioriamo performance.
-  partizione dei dati corrisponde spesso a partizione naturale di applicazioni e utenti. i dati risiedono vicini a dove vengono usati più spesso ma sono comunque accessibili globalmente.
+- **località**: tendendo i dati vicino alle applicazioni che li usano miglioriamo performance. Partizione dei dati corrisponde spesso a partizione naturale di applicazioni e utenti. I dati risiedono vicini a dove vengono usati più spesso ma sono comunque accessibili globalmente.
 
 - **modularità**: distribuzione dinamica dei dati si adatta meglio alle esigenze delle applicazioni.
 
@@ -222,7 +221,7 @@ Remote transactions: query con insert/delete/update
 
 Deve valere atomicità. Nessun problema su consistenza e durabilità. Controllo sulla concorrenza (Isolamento),
 
-Ogni transazione è fatta da sottotransazione e ogni sottroanzazione viene eseguita da un nodo. Ogni sotto-transazione è schedulata indipendentemente da ciascun nodo. La schedule globale dipende da schedule locali.
+Ogni transazione è fatta da sottotransazioni e ogni sottotransazione viene eseguita da un nodo. Ogni sotto-transazione è schedulata indipendentemente da ciascun nodo. La schedule globale dipende da schedule locali.
 
 La schedule globale è serializzabile se gli ordini di serializzazione sono gli stessi per tutti i nodi coinvolti (solo se non c'è replica).
 
@@ -260,13 +259,13 @@ Problema: il nodo dell'unico LM diventa collo di bottiglia.
 
 Per ogni risorsa (ho le repliche) individuo la copia primaria
 
-La copia primaria fa da LM,
+La copia primaria fa da LM, un LM per ogni risorsa.
 
 Per ogni risorsa della transazione il TM chiede i lock al LM responsabile della copia primaria, che assegna i lock.
 
 Evitiamo bottle neck, ma introduco complicazione perchè TM deve sapere dove stanno tutti i LM, serve directory globale.
 
-Serve comunque controllo su deadlock causati da attesa circolare tra due o più nodi. Gestito nei ddbms tramite time out. Definiamo un algoritmo ascincrono e distribuito (p2p) dove i singoli nodi rilevano i deadlock in giro.
+Serve comunque **controllo su deadlock** causati da attesa circolare tra due o più nodi. Gestito nei ddbms tramite time out. Definiamo un algoritmo ascincrono e distribuito (p2p) dove i singoli nodi rilevano i deadlock in giro.
 
 Algoritmo:
 
@@ -298,37 +297,37 @@ Tipi di guasti e conseguenze:
 
 - prima fase:
   
-  - il TM chiede a tutti i nodi se vogliono fare commit o abort
+  - il TM chiede a tutti i nodi se vogliono fare commit o abort (*prepare*)
   
-  - ogni nodo comunica unilateralmente la sua decisione
+  - ogni nodo comunica unilateralmente la sua decisione (*ready_to_commit* o *not_ready_to_commit*)
 
 - Seconda fase:
   
-  - TM prende decisione gliale (se uno vuole abort abort per tutti, altrimenti commit)
+  - TM prende decisione globale (se uno vuole abort abort per tutti, altrimenti commit)
   
-  - TM comunica a tutti la decisione.
+  - TM comunica a tutti la decisione per poter procedere con le azioni locali.
 
-Nei log di ogni nodo compaiono due tipi di record:
+Nei **log** di ogni nodo compaiono due tipi di record:
 
 - Record di transazione (info sulle operazioni effettuate)
 
-- Record di sistema (evento di checkpoint e evento di dump)
+- Record di sistema (evento di checkpoint e dump del db)
 
 Prima scrivo su file di log e poi eseguo operazione.
 
 Nuovi recordi di log su TM:
 
-- prepare record (identità di tutti i nodi e le transazioni)
+- prepare record (contiene identità di tutti i nodi e le transazioni)
 
-- global commit o global abort
+- global commit o global abort (decisione globale)
 
 - complete (alla fine del protocollo)
 
 Nuovi record di log su RM (i nodi)
 
-- ready record 
+- ready record (volontà di partecipare alla fase di commit)
 
-- not ready
+- not ready (indisponibilità al commit)
 
 Gestione dei timeout:
 
@@ -393,7 +392,7 @@ Guasti di componenti:
 
 - protocolli di recovery -> assicura ripristino
 
-Protocolli di terminazione con guasto di un rm:
+**Protocolli di terminazione con guasto di un rm:**
 
 - RM cade prima del prepare
   
@@ -407,7 +406,9 @@ Protocolli di terminazione con guasto di un rm:
   
   - TM rimanda decisione abort/commit 
 
-Protocolli di terminazione con guasto del tm:
+TM capisce se RM è caduto grazie a timeout.
+
+**Protocolli di terminazione con guasto del tm:**
 
 - TM cade nella fase di prepare
   
@@ -416,24 +417,24 @@ Protocolli di terminazione con guasto del tm:
 - TM cade dopo:
   
   - gli RM si possono mettere d'accordo tra di loro per capire cosa fare (algoritmi bizantini)
-  
-  - Variamo comportamento in base a ultimo log in TM:
-    
-    - Se ultimo log è prepare:
-      
-      - TM può decidere di fare global abort 
-      
-      - oppure ripetere la prima fase sperando di giungere a global commit.
-    
-    - se ultimo log è global-commit o global-abort:
-      
-      - TM ripete seconda fase
-    
-    - se ultimo log è una complete
-      
-      - va tutto bene e TM non fa nulla.
 
-Protocolli di ripristino con caduta di un RM:
+<u>Variamo comportamento in base a ultimo log in TM:</u>
+
+- Se ultimo log è prepare:
+  
+  - TM può decidere di fare global abort 
+  
+  - oppure ripetere la prima fase sperando di giungere a global commit.
+  
+  - se ultimo log è global-commit o global-abort:
+    
+    - TM ripete seconda fase
+
+- se ultimo log è una complete
+  
+  - va tutto bene e TM non fa nulla.
+
+<u>Protocolli di ripristino con caduta di un RM in base ai log:</u>
 
 - nel file di log c'è scritto abort o commit:
   
@@ -459,7 +460,7 @@ Anche nel caso di perdita di ack la seconda fase viene ripetuta a seguito di tim
 
 Ridurre numero messaggi.
 
-Su un RM vede che le sue operazioni sono read-only e poi finisce protocollo.
+Se un RM vede che le sue operazioni sono read-only finisce protocollo e non partecipa alla seconda fase.
 
 "scordarsi abort, ricordarsi i commit": se decido di fare abort abbandona la transazione e bon. Gli unici record nel log sono global commit, ready e commit.
 

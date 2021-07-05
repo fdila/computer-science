@@ -2,15 +2,19 @@
 
 Modello relazionale pro:
 
+- minimizzazione dello spazio
+
 - modello ben definito
 
 - principio closed world assumption (tutto quello che mi serve è presente nello schemad del db)
 
-- 35 anni di sviluppo su sicurezza, ottimizzazione e standardizzazione
+- 35 anni di sviluppo su sicurezza, ottimizzazione e standardizzazione, proprietà ACID
 
 - ben conosciuto
 
 Modello relazionale contro:
+
+- minimizzazione va a scapito delle performance, la memoria non costa più tanto ed è poco utile minimizzare
 
 - principio closed world assumption non è più valido ai giorni d'oggi
 
@@ -42,7 +46,7 @@ Preso un sistema distribuito di nodi si considerano 3 aspetti:
 
 - Consistency: tutti i nodi abbiano gli stessi dati nello stesso istante (garantisce che tutti i client hanno sempre la stessa vista sui dati)
 
-- Availability: garanzia che ogni richiesta ricevuta dal sistema riceva una risposta, sia in caso di fallimento che di successo. (garantisce che un client puà sempre leggere/scrivere)
+- Availability: garanzia che ogni richiesta ricevuta dal sistema riceva una risposta, sia in caso di fallimento che di successo. (non si deve avere attesa infinita)
 
 - Partition Tolerance: il sistema deve continuare ad operare anche se si hanno perdite di messaggi o fallimenti di parti del sistema. (garantisce che il sistema continui a funzionare nonostante partizioni fisiche della rete)
 
@@ -50,9 +54,17 @@ Il teorema garantisce che tra queste 3 caratteristiche, in un sistema distribuit
 
 I sistemi NoSQL sono tipicamente divisi in:
 
-- Sistemi CP (garantiscono consistenza e partition tolerance)
+- Sistemi CP (garantiscono consistenza e partition tolerance), ad esempio mongodb, bigtable
 
-- Sistemi AP (garantiscono availability e partition tolerance)
+- Sistemi AP (garantiscono availability e partition tolerance), ad esempio cassandra
+
+In fase di progettazione ci sono quindi 3 step:
+
+- scelta del modello (documentale, grafo etc)
+
+- scelta del DBMS
+
+- scelta delle caratteristiche del CAP theorem
 
 ###### BASE
 
@@ -65,6 +77,8 @@ Acronimo sta per:
 - Eventual consistency: prima o poi i dati convergeranno ad uno stato di consistenza.
 
 ## Document based system
+
+Formato da documenti con coppie chiave-valore o chiave-oggetto, dove l'oggetto può essere a sua volta una coppia chiave-oggetto. Tipo JSON.
 
 Abbiamo una chiave, object identifier, che può essere indicizzata tramite meccanismo di hashing. Documenti memorizzati solitamente in file json o xml.
 
@@ -104,11 +118,15 @@ DBMS documentale con dati memorizzati in binary json (bson).
 
 Embedding è più performante.
 
+Engine -> WiredTiger. Supporto alle transazioni. Linguaggio MongoDB Query Language.
+
 Possono esserci indici.
 
 ###### Repliche in MongoDB
 
 Mongo rientra nella categoria CP, non garantisce disponibilità in caso di guasto.
+
+Si hanno i replicaSet.
 
 La replica si ha in modalità master-slave, nel gergo di mongo si dice **primary-secondary**. Tutte le scritture si fanno su primario e poi vanno su secondari.
 
@@ -136,7 +154,7 @@ Un nodo può assumere uno dei seguenti stati:
 
 Meccanismo di elezione:
 
-- ogni replica manda un heartbeat agli altri nodi
+- ogni replica manda un heartbeat (un bit ogni due secondi) agli altri nodi
 
 - ogni nodo ha un id
 
@@ -158,6 +176,16 @@ Opzione **writeConcern** per indicare al sistema il comportamento del replica se
 
 - wtimeout, tempo limite da aspettare nel caso in cui w sia maggiore di 0
 
+A seconda della w abbiamo:
+
+- w = 0, nessuna certezza di inserimento, utile per operazioni veloci.
+
+- w = 1, scrittura su nodo primary
+
+- w = n, scrittura su n nodi
+
+- w = majority, metà dei nodi più uno.
+
 ###### Frammentazione
 
 Meccanismo di sharding, scalabilità orizzontale
@@ -170,7 +198,7 @@ Meccanismo di sharding, scalabilità orizzontale
 
 - tag-aware, in base a certi attributi
 
-Meccanismo dinamico
+Meccanismo dinamico, mongo adatta sharding in base al volume di dati facendo un bilanciamento automatico.
 
 Ruoli:
 
@@ -180,7 +208,7 @@ Ruoli:
 
 - shard: hanno i dati.
 
-Sia shard che config server sono replicati.
+Sia shard che config server sono replicati per evitare single point of failure.
 
 Nel caso di query su un solo shard si parla di target query, su più shard di broadcast query.
 
@@ -196,7 +224,7 @@ Opzione readConcern:
 
 - Available: default per leggere dai nodi secondari
 
-- Majority: quando la metà più uno delle repliche ha ricevuto un ack in scrittura sul dato.
+- Majority: quando la metà più uno delle repliche ha ricevuto un ack in scrittura sul dato allora posso leggere.
 
 ###### Transazioni
 
@@ -236,15 +264,23 @@ In entrambi i casi si possono fare le cose in modo:
 
 - non-nativo (ad esempio per lo storage si converte prima in un altro formato, rischiamo comunque join-bombing).
 
+Abbiamo poi:
+
+- graph database: grafo usato per le transazioni online (OLTP)
+
+- graph compute engine: tecnologie per analisi offline dei grafi (OLAP)
+
 I grafi scalano male e non possono essere facilmente frammentati.
 
 ### Neo4j
 
 Sia graph storage che graph processing nativi.
 
-Linguaggio di query -> Cypher
+Linguaggio di query -> Cypher. Pattern-matching query language.
 
-Il risultato di una query non è sempre un grafo: può, ad esempio, essere una tabella. Per questo motivo non si possono concatenare query
+Il risultato di una query non è sempre un grafo: può, ad esempio, essere una tabella. Per questo motivo non si possono concatenare query.
+
+Non ha meccanismi nativi di frammentazione.
 
 Garantisce:
 
@@ -255,6 +291,8 @@ Garantisce:
 - recoverability
 
 Le performance non dipendono dalla grandezza del dataset ma dalla query.
+
+Per distribuire possiamo fare cluster di nodi, alcuni chiamati **core server**, nodi su cui tutte le scritture sono fatte in contemporanea e altri chiamati **replica server** che sono in sola lettura e vengono creati con meccanismi di replica simili a quelli già visti. Una query viene eseguita sul nodo più vicino. Questo sistema è detto **casual clustering**.
 
 ## Modelli poliglotta
 

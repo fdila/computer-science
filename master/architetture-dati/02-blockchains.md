@@ -64,18 +64,12 @@ Quindi miner sceglie ~1000 transazioni, spara a caso nonce, calcola hash blocco,
 
 Bitcoin sono in numero limitato, max 21 milioni
 
-
-
 Ethereum -> smart contracts
 
 Programmati nel linguaggio solidity (simile a java)
 
 Sulla blockchain memorizzo bytecode
 
-
-
 Ti serve davvero la blockchain?
 
-<img title="" src="/home/fdila/.config/marktext/images/984b1f40c3bf2339b5690d35f828757e9654b303.png" alt="" width="665">
-
-
+<img title="" src="img/blockchain.png" alt="" width="665">
