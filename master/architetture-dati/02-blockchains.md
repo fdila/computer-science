@@ -72,4 +72,4 @@ Sulla blockchain memorizzo bytecode
 
 Ti serve davvero la blockchain?
 
-<img title="" src="img/blockchain.png" alt="" width="665">
+![](img/blockchain.png)
