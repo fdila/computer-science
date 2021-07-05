@@ -308,7 +308,7 @@ Modelli supportati:
 
 - a grafo
 
-- ricerca full-text
+- ricerca full-text (tipo Elastic search)
 
 Linguaggio query **AQL (Arango Query Language)**: posso scrivere query come json, a grafo, in formato key-value o full-text search.
 
@@ -316,7 +316,7 @@ Ho documenti.
 
 Connessioni tra documenti chiamata "edges", con attributi "_from" e "_to".
 
-Vari metodi di scalabilità:
+Vari metodi di scalabilità, con deploy:
 
 - singola istanza
 
@@ -354,6 +354,18 @@ Prendo un cluster e lo copio su altro cluster. Replica one-way. Uso code come ka
 
 Modello molto semplice dove si hanno righe con chiave e valore. I valori sono considerati come blob, il db non è in grado di interpretarli e farci query.
 
+Poche operazioni:
+
+- inserire valore data chiave
+
+- trovare valore data chiave
+
+- modificare valore data chiave
+
+- cancellare chiave e suo valore
+
+Solitamente funzionano in-memory.
+
 Accesso veloce tramite strutture di hash e scalabilità orizzontale.
 
 ### Redis
@@ -366,7 +378,7 @@ Sharding:
 
 - con una regex?
 
-Placement:
+Placement (capire dove distribuire i dati):
 
 - Dense: uso lo shard fino a che ha memoria
 
@@ -378,47 +390,79 @@ Repliche:
 
 - Active-active setup (più cluster read/write in prarallelo)
 
-Modello in-memory
+Modello in-memory, ma recentemente si è aggiunta la possibilità di persistenza.
 
 ## Modello wide column
 
 A metà tra key-value e documentale.
 
+Accanto alla chiave non ho un blob ma una riga con attributi mono-valore.
+
 ### Big table
 
-Google. Mappa multidimensionale ordinata, persistente e sparsa.
+Google. 
 
-Per una tabella ho varie column family, in ogni column family ci sono più colonne.
+Mappa multidimensionale ordinata, persistente e sparsa indicizzata tramite tre informazioni:
+
+- row key, di tipo string
+
+- column key, di tipo string
+
+- timestamp
+
+Grazie ai timestamp ho gestione concorrenza basata su multiversioning.
+
+Per una tabella ho varie column family, in ogni column family ci sono più colonne. Ogni riga può avere diversi column family e ciascun column family può avere diversi qualifiers.
 
 Non è facile fare query.
 
 ### Hbase
 
-Evoluzione di Big Table.
+Evoluzione distribuita di BigTable.
 
-Hadoop.
+Dati divisi in tables, ogni table composta da colonne raggruppate in column family.
 
-Architettura master/slave:
+Architettura master/slave basata su Hadoop:
 
-- HBaseMaster
+- HBaseMaster, master
 
-- HBaseRegion: sottoinsieme delle righe
+- HBaseRegion: sottoinsieme delle righe, region server che sono gli slave.
 
-HDFS, Zookeeper?
+- Hbase client.
+
+HDFS -> Hadoop Distributed File System.
+
+Posso avere più master. Coordinamento master-region server gestito da Zookeeper.
+
+Gestiamo la memorizzazione con Write Ahead Log.
 
 ### Cassandra
 
 Lei si definisce key-value, a noi non interessa come si identificano le cose e la trattiamo come wide column.
 
-Una riga è una collezione di colonne.
+Esiste il concetto di column family definito all'interno di un key space, come insieme di coppie key-value. Una column family è una tabella con coppie key-value come righe. Una riga è una collezione di colonne. (??)
 
-Cassandra Query Language, simile a sql
+Cassandra Query Language, simile a SQL.
 
- Architettura distribuita p2p, tipo dht. No single point of failure.
+ Architettura distribuita p2p, tipo DHT (distributed hash table). No single point of failure.
 
 All'interno struttura ad anello su chiave hash, partizionamento si basa su questo.
 
-Protocollo di gossip per location disovery e state information.
+Protocollo di gossip per location discovery e state information, ogni nodo chiede al successivo come va.
+
+Per quando riguarda la consistenza abbiamo che lettura e scrittura sono consistenti e date per certe se:
+
+- almeno un nodo mi risponde, consistency one
+
+- tutti i nodi mi rispondono
+
+- la maggioranza mi risponde, consistency quorum.
+
+La maggioranza è data dal fattore di replica. Se il fattore di replica è 3, la maggioranza è 2.
+
+Le operazioni di cancellazione rendono il dato non disponibile senza cancellarlo subito. Periodicamente si compattano i dati.
+
+Anche qui abbiamo write ahead log.
 
 ## Modello RDF
 
