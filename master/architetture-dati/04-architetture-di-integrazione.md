@@ -106,7 +106,7 @@ Stesso concetto rappresentato in modo strutturalmente diverso nei due schemi:
 
 Abbiamo quindi una trasformazione di schema.
 
-Si fa schema matching per capire come unificare i vari schemi.
+Si fa **schema matching** per capire come unificare i vari schemi.
 
 Si procede poi con l'integrazione vera e propria.
 
@@ -154,15 +154,15 @@ Conflitti a livello di istanza:
 
 - conflitti di attributi: ho stesso attributo con due valori diversi. posso usare soluzione **currency**: scelgo il valore temporalmente inserito per ultimo.
 
-- conflitti di chiave.
+- conflitti di chiave: chiavi primarie diverse in due entità diverse che rappresentano lo stesso oggetto.
 
 La risoluzione dei conflitti a livello di istanza di può fare o a design time o a query time. Si hanno funzioni di risoluzione dei conflitti che cercano, dati due valori conflittuali, di restituire quello più probabile. Un criterio di misura può essere l'affidabilità delle sorgenti. 
 
 Due tipi di soluzioni per le istanze:
 
-- deduplication: integrazione dati nella stessa tabella (ovvero se ci sono dati duplicati nella stessa tabella capire cosa farci).
+- deduplication: integrazione dati nella stessa tabella (ovvero se ci sono dati duplicati ma con valori di attributi diversi nella stessa tabella capire cosa farci).
 
-- integrazione dei dati in più tabelle
+- integrazione dei dati in più tabelle, cercando una pseudo-chiave primaria per fare matching.
 
 **Record linkage**: tecnica di risoluzione dei conflitti a livello di istanza. Date le tabelle in input posso avere in output:
 
@@ -176,7 +176,7 @@ La risoluzione dell'ultimo caso viene fatta da un umano anche se da qualche anno
 
 Per confrontare i vari attributi delle tabelle dobbiamo ridurre lo spazio di ricerca (fare il prodotto cartesiano non è efficiente). Si hanno **blocking methods** per ridurre lo spazio di ricerca. Una volta ridotto si applica un modello di decisione per il check. 
 
-Quindi per il record linkage si ha:
+Quindi per il record linkage probabilistico si ha:
 
 - preprocessing: normalizzazione dei dati secondo uno standard
 

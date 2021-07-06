@@ -2,15 +2,15 @@
 
 Definizioni varie ed eventuali:
 
-- utilità: precisione della rappresentazione interna del dato rispetto al compito svolto
+- **utilità**: precisione della rappresentazione interna del dato rispetto al compito svolto
 
-- fedeltà: aderenza del dato alla realtà
+- **fedeltà**: aderenza del dato alla realtà
 
-- qualità: caratteristiche di un artefatto che influiscono sulla sua capacità di soddisfare le esigenze e le aspettative dell'utente. Un dato è di qualità se è adatto all'uso che se ne deve fare -> fitness for use
+- **qualità**: caratteristiche di un artefatto che influiscono sulla sua capacità di soddisfare le esigenze e le aspettative dell'utente. Un dato è di qualità se è adatto all'uso che se ne deve fare -> fitness for use
 
-- dimensione (o caratteristica): caratteristica specifica che descrive la qualità delle informazioni, a volte è misurabile
+- **dimensione** (o caratteristica): caratteristica specifica che descrive la qualità delle informazioni, a volte è misurabile
 
-- sottodimensioni: sotto caratteristiche che spesso classificano una certa dimensione
+- **sottodimensioni**: sotto caratteristiche che spesso classificano una certa dimensione
 
 Se le dimensioni sono misurabili ci sono delle metriche per farlo.
 
@@ -32,9 +32,11 @@ Ci sono metriche:
 
 - accuratezza semantica
 
-Su stringhe si può valutare accuratezza con distanza di edit (normalizzata e non).
+Su stringhe si può valutare accuratezza con distanza di edit (normalizzata e non), tipo distanza di Hamming.
 
-**Completezza**: copertura con la quale il fenomeno osservato è rappresentato nell'insieme dei dati. Nel mondo NoSQL difficile visto che non abbiamo un "mondo chiuso".
+Per stringhe fatte da più stringhe abbiamo distanza di token, come Jaccard index.
+
+**Completezza**: copertura con la quale il fenomeno osservato è rappresentato nell'insieme dei dati. Guardiamo quanti NULL ci sono (rispetto a tuple, attributi, tabelle). Nel mondo NoSQL difficile visto che non abbiamo un "mondo chiuso".
 
 **Currency**: misura con quale rapidità i dati sono aggiornati rispetto al corrispondente evento nel mondo reale.
 
@@ -138,7 +140,7 @@ Con la **data preparation** facciamo cose:
 
 - schema normalization (tipo matchare attributi che rappresentano stessa cosa)
 
-- imputation: fase di decisione ()dove capiamo come gestire NULL ad esempio)
+- imputation: fase di decisione (dove capiamo come gestire NULL ad esempio)
 
 #### Data conflict
 
@@ -148,4 +150,22 @@ Tipi di conflitti:
 
 - inter-source: stessa informazione in sorgenti diversi.
 
+Varie tecniche:
 
+- usare una tabella di riferimento
+
+- standardizzare e trasformare i dati secondo un unico standard
+
+- sfruttare la conoscenza del dominio
+
+- fare outlier detection e eliminare gli errori.
+
+Step del processo di integrazione:
+
+- schema mapping, si fa una sorta di schema integration
+
+- data transformation, standardizzazione
+
+- duplicate detection
+
+- data fusion

@@ -1,4 +1,4 @@
-# Neo4j
+# Cheatsheet Neo4j
 
 Trovare nodi in base a attributi
 
