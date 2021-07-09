@@ -1,4 +1,4 @@
-# Neo4j
+# Cheatsheet Neo4j
 
 Trovare nodi in base a attributi
 
@@ -79,5 +79,3 @@ CREATE (john)-[:Knows{since: "01/09/2013"}]->(sally)
 MATCH (sally:Person {name: "Sally"}), (john:Person {name: "John"}) 
 CREATE (john)-[:friend_of {date: "01/09/2013"}]->(sally)
 ```
-
-

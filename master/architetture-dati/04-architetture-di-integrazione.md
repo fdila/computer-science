@@ -2,12 +2,6 @@
 
 Integrazione -> Unire in qualche modo diversi dataset.
 
-Distinguiamo:
-
-- data integration: diversi set di dati con attributi diversi. costruisco unico insieme con tutti gli elementi dei due insiemi.
-
-- data enrichment: arricchire un set di dati con alcuni dati di altri insiemi, qualora possibile.
-
 ## Architetture per data integration
 
 Due tecniche:
@@ -36,15 +30,37 @@ Due componenti fondamentali:
 
 - vari wrapper: agganciano ogni schema locale al GS, rappresentando la sorgente in uno schema compatibile con GS.
 
+Il mediator:
+
+- raggruppa informazioni sulla stessa entità del mondo reale
+
+- rimuove la replicazione tra le varie fonti
+
+- risolve le inconsistenze tra le fonti
+
+- ottiene accuratezza, completezza etc tra i dati provenienti da diverse fonti.
+
+L'interazione con il mediator è divisa in due fasi:
+
+- creazione della rappresentazione unificata, creando GS e mapping, fatta a design time.
+
+- formulazione e esecuzione di query nella rappresentazione unificata, fase a runtime.
+
 Approcci per costruire il Global Scheme:
 
-- GAV (Global As View): creo schema globale sulla base dell'osservazione degli schemi sorgente.
+- GAV (Global As View): creo schema globale sulla base dell'osservazione degli schemi sorgente. Come vantaggio abbiamo che si prendono tutte le informazioni disponibili, ma si potrebbe non ottenere lo schema voluto. In questa configurazione il mediator procede tramite unfolding delle query.
 
-- LAV (Local As View): lo schema globale viene progettato a priori indipendentemente dagli schemi locali, dai quali verranno prese soltanto le informazioni di interesse.
+- LAV (Local As View): lo schema globale viene progettato a priori indipendentemente dagli schemi locali, dai quali verranno prese soltanto le informazioni di interesse. Query management più complesso rispetto a GAV.
 
 - GLAV (Global and Local As View): mapping dato da insieme di viste, alcune sullo schema globale altre sulle sorgenti.
 
 ## Data integration
+
+Distinguiamo:
+
+- data integration: diversi set di dati con attributi diversi. costruisco unico insieme con tutti gli elementi dei due insiemi, si può vedere come una full join.
+
+- data enrichment: arricchire un set di dati con alcuni dati di altri insiemi, qualora possibile, si può vedere come una left outer join.
 
 Nell'unire due (o più) dataset possono essere presenti conflitti/eterogeneità:
 
@@ -52,7 +68,7 @@ Nell'unire due (o più) dataset possono essere presenti conflitti/eterogeneità:
 
 - eterogeneità di tipo
 
-- eterogeneità di modello
+- eterogeneità di modello (tutte le restanti eterogeneità  che non rientrano in nome/tipo)
 
 ### Eterogeneità di nome
 
@@ -63,8 +79,6 @@ Diverse situazioni:
 - omonimia: concetti diversi con gli stessi nomi. Sintassi uguale, semantica diversa. Caso più difficile da riconoscere.
 
 - iperonimia: tra i due concetti uno è più altro di livello rispetto all'altro, come in una relazione IS-A
-
-In fase di progettazione dello schema integrato devo riconoscere e gestire questi casi.
 
 ### Eterogeneità di tipo
 
@@ -92,7 +106,7 @@ Stesso concetto rappresentato in modo strutturalmente diverso nei due schemi:
 
 Abbiamo quindi una trasformazione di schema.
 
-Si fa schema matching per capire come unificare i vari schemi.
+Si fa **schema matching** per capire come unificare i vari schemi.
 
 Si procede poi con l'integrazione vera e propria.
 
@@ -102,9 +116,9 @@ Fasi:
 
 - schema trasformation (o pre-integration): prende n schemi e li restituisce omogenei in base a tecniche di model trasformation o reverse engineering.
 
-- correspondences investigation: 
+- correspondences investigation: studio corrispondenze tra schemi
 
-- schema integration e mapping generation
+- schema integration e mapping generation: si definiscono lo schema integrato e le regole di mapping
 
 Due strategie fondamentali:
 
@@ -122,7 +136,7 @@ Due strategie fondamentali:
 
 Si cercano corrispondenze semantiche. Sfruttiamo equivalenze e generalità.
 
-Diversi tipi di conflitti:
+Si hanno diversi tipi di conflitti:
 
 - conflitti di classificazione: quando elementi omologhi descrivono insiemi diversi di oggetti del mondo reale. si risolve tramite generalizzazione o specifica della gerarchia.
 
@@ -140,15 +154,15 @@ Conflitti a livello di istanza:
 
 - conflitti di attributi: ho stesso attributo con due valori diversi. posso usare soluzione **currency**: scelgo il valore temporalmente inserito per ultimo.
 
-- conflitti di chiave.
+- conflitti di chiave: chiavi primarie diverse in due entità diverse che rappresentano lo stesso oggetto.
 
 La risoluzione dei conflitti a livello di istanza di può fare o a design time o a query time. Si hanno funzioni di risoluzione dei conflitti che cercano, dati due valori conflittuali, di restituire quello più probabile. Un criterio di misura può essere l'affidabilità delle sorgenti. 
 
 Due tipi di soluzioni per le istanze:
 
-- deduplication: integrazione dati nella stessa tabella (ovvero se ci sono dati duplicati nella stessa tabella capire cosa farci).
+- deduplication: integrazione dati nella stessa tabella (ovvero se ci sono dati duplicati ma con valori di attributi diversi nella stessa tabella capire cosa farci).
 
-- integrazione dei dati in più tabelle
+- integrazione dei dati in più tabelle, cercando una pseudo-chiave primaria per fare matching.
 
 **Record linkage**: tecnica di risoluzione dei conflitti a livello di istanza. Date le tabelle in input posso avere in output:
 
@@ -162,7 +176,7 @@ La risoluzione dell'ultimo caso viene fatta da un umano anche se da qualche anno
 
 Per confrontare i vari attributi delle tabelle dobbiamo ridurre lo spazio di ricerca (fare il prodotto cartesiano non è efficiente). Si hanno **blocking methods** per ridurre lo spazio di ricerca. Una volta ridotto si applica un modello di decisione per il check. 
 
-Quindi per il record linkage si ha:
+Quindi per il record linkage probabilistico si ha:
 
 - preprocessing: normalizzazione dei dati secondo uno standard
 
@@ -179,7 +193,3 @@ Per la fusione si può quindi:
 - cercare di evitare i conflitti basandosi su metadati, sorgente o istanze
 
 - gestire i conflitti tramite funzioni di risoluzione dei conflitti
-
-
-
-
