@@ -19,3 +19,5 @@ Classificazione un po' più formale:
 - **NP-hard**: difficile almeno quanto NP, Tutti i problemi NP si possono ricondurre a problemi NP-Hard
 
 - **NP-complete**: NP-Hard che sta in NP
+
+![NP](img/np.png)

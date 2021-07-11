@@ -27,6 +27,16 @@ Possiamo ottenere la stessa cosa usando una macchina di Turing TM che accetta il
 
 ## Prerequisiti grafi
 
+Un grafo è definito come $G = (V,E)$ con $V$ insieme di vertici e $E$ insieme di vertici.
+
+* Un grafo può essere *orientato* (gli archi hanno una freccia per indicare la direzione) o *non orientato*.
+* Un *cammino* tra due vertici è una sequenza di archi che mi porta da un vertice all'altro.
+* Un cammino è detto *ciclo* se vertice di partenza e di arrivo coincidono.
+* Due vertici sono *connessi* se esiste un cammino che li collega.
+* Un grafo connesso è un grafo dove per ogni coppia di vertici si ha che essi sono connessi.
+* Se questo cammino è di un solo arco si parla di *grafo completo*, ovvero ogni vertice è adiacente ad ogni altro.
+* Si parla di grafo *pesato* se si ha una funzione $W$ che associa un peso ad ogni arco.
+
 **Cammino e Ciclo Hamiltoniano**: Dato un grafo $G$ si definisce cammino Hamiltoniano un cammino t.c. esso tocca tutti i vertici del grado una e una sola volta. Si parla di ciclo Hamiltoniano se dopo aver toccato l'ultimo vertice torno al primo.
 
 **Grafo Hamiltoniano**: un grafo contiene almeno un ciclo Hamiltoniano
