@@ -1,4 +1,6 @@
-# Prerequisiti di computazione
+# Prerequisiti vari
+
+## Prerequisiti computazione
 
 Macchina di Turing ragionano in binario, ho in input una stringa di 0 e 1 e in output ho un bit, si ha la funzione:
 
@@ -22,3 +24,13 @@ Per il modello della macchina RAM si parla invece di problemi di decisione, quin
 Possiamo ottenere la stessa cosa usando una macchina di Turing TM che accetta il linguaggio e una macchina di Turing complementare che risponde yes se la stringa non appartiene al linguaggio.
 
 È dimostrabile che se $L\pi$ è accettabile in tempo polinomiale allora nello stesso tempo è anche decidibile.
+
+## Prerequisiti grafi
+
+**Cammino Hamiltoniano**
+
+**Ciclo Hamiltoniano**
+
+**Ciclo e cammino di Eulero**
+
+**TSP metrico**

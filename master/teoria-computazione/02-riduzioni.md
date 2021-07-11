@@ -20,9 +20,9 @@
 
 ### 3-SAT < ind-set
 
-### Set cover < vertex cover
+### vertex-cover < ind-set
 
-### Set cover < ind-set
+### set-cover < vertex-cover
 
 ### Clique < 3-SAT
 
