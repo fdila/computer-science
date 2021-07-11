@@ -27,10 +27,16 @@ Possiamo ottenere la stessa cosa usando una macchina di Turing TM che accetta il
 
 ## Prerequisiti grafi
 
-**Cammino Hamiltoniano**
+**Cammino e Ciclo Hamiltoniano**: Dato un grafo $G$ si definisce cammino Hamiltoniano un cammino t.c. esso tocca tutti i vertici del grado una e una sola volta. Si parla di ciclo Hamiltoniano se dopo aver toccato l'ultimo vertice torno al primo.
 
-**Ciclo Hamiltoniano**
+**Grafo Hamiltoniano**: un grafo contiene almeno un ciclo Hamiltoniano
 
-**Ciclo e cammino di Eulero**
+**Cammino e Ciclo di Eulero**: Dato un grafo $G$ si definisce cammino Euleriano un cammino t.c. tocca tutti gli archi una e una sola volta. Si parla di ciclo Euleriano se attraversa tutti gli archi tornando al primo vertice alla fine.
 
-**TSP metrico**
+**TSP metrico**: è il problema del Travelling Salesman Problem, ovvero la ricerca di un cammino di peso minimo, introducendo delle restrizioni sul grafo:
+
+* le distanze degli archi sono tutte non negative.
+* le distanze soddisfano la disuguaglianza triangolare:
+$$
+\forall i,j,k : d_{ij} + d_{ik} \ge d_{ik}
+$$
