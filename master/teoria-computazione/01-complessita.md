@@ -9,3 +9,13 @@ Categorie di problemi:
 - **dimostrabilmente difficili**: so risolverli ma so che non esiste un algoritmo efficiente in quanto è stato dimostrato che non può esistere
 
 - **impossibili**: non so risolverli neanche in modo non efficiente.
+
+Classificazione un po' più formale:
+
+- **P:** risolvibile in tempo polinomiale da una DTM
+
+- **NP**: risolvibile in tempo polinomiale da una NDTM, o che ha certificato in tempo polinomiale
+
+- **NP-hard**: difficile almeno quanto NP, Tutti i problemi NP si possono ricondurre a problemi NP-Hard
+
+- **NP-complete**: NP-Hard che sta in NP
