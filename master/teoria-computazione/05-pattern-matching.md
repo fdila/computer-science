@@ -144,14 +144,66 @@ Per costruire le varie $D$ prima itero su $j$, poi su $k$.
 
 **Struttura di indicizzazione**: struttura dati che riorganizza un testo in maniera da rendere facile ed efficiente un compito che eseguito sul testo originale risulta essere difficile e inefficiente.
 
+Passi preliminari:
+
+* Fissare ordine lessicografico dei simboli di $\Sigma$
+* Estendere l'alfabeto con il simbolo \$, che nell'ordine lessicografico è il minore di tutti.
+* Aggiungere il \$ a fine testo
+
+**Suffisso di indice $j$**: $s_j$ è il suffisso $T[j, |T|]$, ovvero il suffisso che inizia da $j$.
+Fissato l'ordine lessicografico si può fissare anche l'ordinamento dei suffissi. Per ordinare i suffissi $s_1$ e $s_2$:
+
+* sia $i$ la prima posizione tale per cui $s_1[i] \neq s_2[i]$
+* $s_1[i] < s_2[i] \rightarrow s_1 < s_2$
+* $s_1[i] > s_2[i] \rightarrow s_1 > s_2$
+
+**Rotazione di indice $j$**: concatenazione del suffisso $T[j, |T|]$ con il prefisso $T[1, j-1]$.
+
 ### Suffix array
 
 * Occupa $O(n \log n)$ spazio
 * Non contiene informazioni sui simboli del testo
 * Permette la ricerca esatta di un pattern in un testo in tempo $O(m \log n)$
 
+**Suffix Array**: il SA di un testo \$-terminato di lunghezza $n$ è un array $S$ di $n$ interi tale che $S[i] = j \iff$ il suffisso di indice $j$ è l' $i$-esimo suffisso nell'ordinamento lessicografico dei suffissi di $T$.
+
+#### Ricerca esatta con SA
+
+* Preprocessing per creare il SA
+* Ricerca esatta in tempo $O(m \log n)$
+
+Faccio ricerca binaria.
+
 ### BWT
 
+* Occupa $O(n \log |\Sigma|)$ spazio
+* Contiene i simboli del testo
 
-### Ricerca esatta con FM-index
+**Definizione formale**: la BWT $B$ di un testo $T$ è un array di lunghezza $n$ tale che $B[i]$ è il simbolo che precede l'i-esimo suffisso $T$ nell'ordinamento lessicografico dei suffissi di $T$.
+
+$B[i]$ precede $T[S[i],n]$ $\rightarrow$ $B[i]$ è il simbolo $T[S[i]-1]$
+
+**Definizione operativa**: la BWT $B$ di un testo $T$ è la permutazione dei simboli di $T$ tale che $B[i]$ è l'ultimo simbolo dell'$i$-esima rotazione (nell'ordinamento lessicografico delle rotazioni di $T$)
+
+1. Costruisco tabella con rotazioni a partire dalla prima
+2. Riordino le rotazioni con l'ordine lessicografico
+3. Prendo l'ultima colonna
+
+**$F$** è la prima colonna della tabella ottenuta sopra, contiene i simboli di $T$ in ordine lessicografico.
+
+Proprietà:
+
+1. Per ogni posizione $i$, il simbolo $B[i]$ precede il simbolo $F[i]$ nel testo $T$
+2. Last-First mapping: l'r-esimo simbolo $\sigma$ in $B$ e l'r-esimo simbolo $\sigma$ in $F$ sono lo stesso simbolo nel testo $T$.
+
+Con queste due proprietà posso ricostruire il testo partendo dall'ultimo carattere (il primo carattere di F), e sfruttare il LF-mapping per ricostruire il resto.
+
+### FM-index
+
+* Rappresentazione numerica della BWT di un testo
+* Permette la ricerca di un pattern in $O(m)$
+* È un self-index
+
+
+
 
