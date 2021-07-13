@@ -92,17 +92,66 @@ $B_{\sigma} = b_1, \dots, b_m$
 
 $B_{\sigma}[i] = b_i = 1 \iff P[i] = \sigma$
 
-Per fare match su stringa:
+Per fare match su stringa ho le $D_j$
+
+$D_j = d_1, \dots, d_m$ 
+$d_i = D_j[i] = 1 \iff P[1,j] = suff(T[1,j])$
+
+$D_j = \text{RSHIFT1} (D_{j-1}) \text{ AND } B_{\sigma = T[j]}$
+
+Ogni volta che $D_j$ ha il bit meno significativo uguale a $1$ ho un match alla posizione $j - m + 1$
+
+$|B(P)| = i \iff D_j[m] = 1$ e $i$ è la più grande posizione $<m$ tale che $D_j[i] = 1$
 
 ## Pattern matching approssimato
+Dato un pattern $P$ e un testo $T$, definiti su alfabeto $\Sigma$ e un soglia di errore $k$ diciamo che:
+
+$P$ ha un'occorrenza approssimata in $T$ in posizione $j$ se esiste una sottostringa $T[j- L + 1, j]$, che ha distanza di edit con $P$  al più pari a $k$ (occorrenza con al più $k$ errori).
 
 ### Wu-Manber
+* Preprocessing del pattern in tempo $O(|\Sigma|m)$ (come Bayeza-Yates)
+* Scansione del testo in tempo $O(nk)$
+
+Preprocessing del pattern: lo stesso di Bayeza-Yates.
+
+Scansione del testo:
+
+Ho le parole $D^h_j$ dove $h$ è il numero di errori rispetto al pattern.
+
+$D_j^h[m] = 1 \iff P[1,j] = suff_h(T[1,j])$
+
+Dove con $suff_h$ intendiamo suffisso con al più $h$ errori.
+
+$$
+\begin{array}{c}
+D_j^h = \text{RSHIFT1}(D^h_{j-1}) \text{AND} B_{T[j]} \\
+\text{OR} \\
+\text{RSHIFT1}(D^{h-1}_{j-1}) \\
+OR \\
+\text{RSHIFT1}(D_j^{h-1}) \\
+OR \\
+D^{h-1}_{j-1}
+\end{array}
+$$
+
+$D^h_j = 1 \rightarrow D_j^{h'} = 1$ per $h' > h$
+
+I primi $h$ bit di $D_j^h$ sono sempre 1
+
+Per costruire le varie $D$ prima itero su $j$, poi su $k$.
 
 ## Text indexing
 
+**Struttura di indicizzazione**: struttura dati che riorganizza un testo in maniera da rendere facile ed efficiente un compito che eseguito sul testo originale risulta essere difficile e inefficiente.
+
 ### Suffix array
 
+* Occupa $O(n \log n)$ spazio
+* Non contiene informazioni sui simboli del testo
+* Permette la ricerca esatta di un pattern in un testo in tempo $O(m \log n)$
+
 ### BWT
+
 
 ### Ricerca esatta con FM-index
 
