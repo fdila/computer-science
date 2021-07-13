@@ -198,11 +198,75 @@ Proprietà:
 
 Con queste due proprietà posso ricostruire il testo partendo dall'ultimo carattere (il primo carattere di F), e sfruttare il LF-mapping per ricostruire il resto.
 
+**Q-intervallo**:
+
+* Definizione rispetto a BTW: data la BWT B di un testo T e una stringa Q definita su $\Sigma$ (\$ escluso), il Q-intervallo è l'intervallo [b, e) di posizioni che contiene i simboli che precedono i suffissi che condividono Q come prefisso
+
+* Definizione rispetto a SA: dato il SA S di un testo T e una stringa Q definita su $\Sigma$ (\$ escluso), il Q-intervallo è l'intervallo [b, e) di posizioni che contiene gli indici dei suffissi che condividono Q come prefisso
+
+In generale dato un Q intervallo [b, e), le occorrenze di Q in T:
+
+* sono in numero e -b
+* iniziano dalle posizioni S[b, e-1]
+* sono precedute dai simboli B[b, e-1]
+
+**Backward extension Q-intervallo**: dato il Q-intervallo [b, e)e un simbolo $\sigma$ la backward-extension con $\sigma$ è il $\sigma$Q intervallo.
+
+**Ricerca esatta con BWT**: parto dal Q intervallo con Q = $\varepsilon$, continuo a fare la backward extension a partire dall'ultimo simbolo di P e tornando indietro fino al primo simbolo di P
+
+
 ### FM-index
 
 * Rappresentazione numerica della BWT di un testo
 * Permette la ricerca di un pattern in $O(m)$
 * È un self-index
+
+2 funzioni:
+
+* $C : \Sigma \rightarrow \mathbb{N}$
+Numero di simboli in $B$ che sono $< \sigma$
+
+Da C posso ricavare la colonna F.
+
+* $Occ : \{1, 2, \dots, n+1 \} \times \Sigma \rightarrow \mathbb{N}$
+$Occ(i, \sigma)$ numero di simboldi uguali a $\sigma$ in $B[1, i-1]$
+
+Da Occ(|T|, $\sigma$) posso ricavarmi la C.
+
+Posizione assoluta $j$ del suffisso $B[i]T[S[i],n]$:
+$j = p + r = LF(i)$
+con
+$r$ numero di simboli uguali a $B[i]$, ovvero $Occ(i, B[i]) +1 $
+$p$ numero di suffissi che iniziano con $\sigma < B[i]$, ovvero $C(B[i])$
+
+Calcolo di $\sigma Q$ coscendo $Q[b, e)$:
+$b' = C(\sigma) + Occ(b, \sigma) + 1$
+$e' = C(\sigma) + Occ(e, \sigma) + 1$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
