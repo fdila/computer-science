@@ -21,3 +21,5 @@ Classificazione un po' più formale:
 - **NP-complete**: NP-Hard che sta in NP
 
 ![NP](img/np.png)
+
+
