@@ -95,7 +95,7 @@ $B_{\sigma}[i] = b_i = 1 \iff P[i] = \sigma$
 Per fare match su stringa ho le $D_j$
 
 $D_j = d_1, \dots, d_m$ 
-$d_i = D_j[i] = 1 \iff P[1,j] = suff(T[1,j])$
+$d_i = D_j[i] = 1 \iff P[1,i] = suff(T[1,j])$
 
 $D_j = \text{RSHIFT1} (D_{j-1}) \text{ AND } B_{\sigma = T[j]}$
 
