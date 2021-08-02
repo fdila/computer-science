@@ -27,7 +27,7 @@ Below you can find the link to some projects I did for various courses.
   - [pypeline](https://gitlab.com/fdila/2020_assignment1_pypeline): small Gitlab pipeline for Python projects.
   - [elicitation-strategy](https://gitlab.com/unishare/processo-e-sviluppo-del-software/2020_assignment2_elicitation_strategy): requirement elicitation, analysis and report.
   - [spring-paper](https://gitlab.com/unishare/processo-e-sviluppo-del-software/2020_assignment3_spring_paper): using Java with Spring framework for a small demo.
-- [electronics-experimentations](https://github.com/fdila/electronics-experimentation): electronics lab, programming a microcontroller and experimenting with basic electronics circuits (e.g. OPAMPs). The course "**Electronics Experimentations**" is actually part of the Physics Bachelor's, but I really liked the syllabus and I added it to my "piano studi".
+- [electronics-experimentations](https://github.com/fdila/electronics-experimentation): electronics lab, programming a microcontroller and experimenting with basic electronics circuits (e.g. OPAMPs). The course "**Esperimentazioni di Elettronica**" is actually part of the Physics Bachelor's, but I really liked the syllabus and I added it to my "piano studi".
 - Projects for the course "**Metodi del Calcolo Scientifico**":
   - [linear-solver-comparison](https://github.com/fdila/linear-solver-comparison): comparison of linear solvers for sparse matrixes in MATLAB, Octave and Python.
   - [DCT-comparison-and-JPEG](https://github.com/fdila/DCT-comparison-and-JPEG): comparison of scipy dct vs. custom implemented dct and implementing a custom JPEG compression algorithm.
