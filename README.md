@@ -31,4 +31,5 @@ Below you can find the link to some projects I did for various courses.
 - Projects for the course "**Metodi del Calcolo Scientifico**":
   - [linear-solver-comparison](https://github.com/fdila/linear-solver-comparison): comparison of linear solvers for sparse matrixes in MATLAB, Octave and Python.
   - [DCT-comparison-and-JPEG](https://github.com/fdila/DCT-comparison-and-JPEG): comparison of scipy dct vs. custom implemented dct and implementing a custom JPEG compression algorithm.
+- [Multi-Operation-ALU-VHDL](https://github.com/fdila/Multi-Operation-ALU-VHDL): project for the course **Industrial Informatics**. Developing a small FSM and ALU in VHDL.
 
