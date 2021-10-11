@@ -139,3 +139,119 @@ Questo problema aumenta all'aumentare della lunghezza dell'ottica.
 
 ## Calibrazione della proiezione
 
+10 parametri? non ho capito
+
+Rappresentazione in forma matriciale della proiezione con uso di coordinate omogenee.
+
+Tornando alla proiezione del modello pin hole avevamo che:
+
+$$
+\begin{cases}
+u = f*(X/Z) \newline
+v = f*(Y/Z)
+\end{cases}
+$$
+
+Se abbiamo punto immagine $P^C$ ovvero il punto immagine in coordinate omogenee $|w_1, w_2, w_3, w_4|^T$ rispetto alla camera, possiamo trovare una matrice di dimensioni (3,4) tale che $M*P^C = |w_1, w_2, w_3|^T$, e possiamo dire che: 
+
+$$
+\begin{cases}
+u = w_1/w_3 \newline
+v = w_2/w_3
+\end{cases}
+$$
+
+Sappiamo anche che:
+
+$$
+\begin{cases}
+w_1 = fx \newline
+w_2 = fy \newline
+w_3 = z
+\end{cases}
+$$
+
+La matrice vista sopra è quindi:
+
+$$
+M = 
+\begin{bmatrix}
+f & 0 & 0 & 0 \\
+0 & f & 0 & 0 \\
+0 & 0 & 1 & 0 \\
+\end{bmatrix}
+$$
+
+Se abbiamo anche la matrice $T^C_W$ che rappresenta la rototraslazione della camera rispetto al mondo possiamo trovare la proiezione rispetto al mondo:
+
+$$
+M \cdot T^C_W
+$$
+
+Problemi ancora aperti (boh ma ne ha parlato nelle rec precedenti?):
+- centro immagine spostato
+- aspect ratio non unitario
+**TODO CHIEDERE!!!**
+
+Per il primo punto abbiamo una pura tralsazione.
+
+$$
+\begin{bmatrix}
+1 & 0 & u_0 \\
+0 & 1 & v_0 \\
+0 & 0 & 1 \\
+\end{bmatrix}
+$$
+Per il secondo abbiamo una matrice per scaling
+$$
+\begin{bmatrix}
+ar & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1  \\
+\end{bmatrix}
+$$
+
+Moltiplicando tutte le matrici viste troviamo la matrice di proiezione totale.
+Per scrivere la matrice totale abbiamo bisogno di 10 parametri:
+- 3 di rotazione e 3 di traslazione per la matrice che rappresenta la rototraslazione tra camera e mondo
+- 1 (ovvero $f$) per la matrice che proietta il punto
+- 2 per la traslazione del centro immagine
+- 1 per l'aspect ratio 
+
+La matrice totale è una (3,4), ovvero ha 12 elementi, di cui 11 indipendenti in quanto stiamo usando matrici per trasformazioni omogenee.
+Noi abbiamo trovato solo 10 parametri, l'11-esimo sarebbe lo "skew" ovvero l'angolo tra righe e colonne dell'immagine, ma questo (grazie a dio) è sempre 90° (zero skew).
+
+### Calibrazione DLT (Direct Linear Transform)
+
+Troviamo direttamente i valori numerici dei componenti della matrice totale di calibrazione.
+
+In fase calibrazione abbiamo immagine e informazione tridimensionale del punto scena.
+Effettuiamo quindi delle misure che ci danno delle relazione sugli 11 valori incogniti della matrice di calibrazione.
+Ogni misura che prendiamo ha 5 elementi:
+
+$$
+\begin{bmatrix} x & y & z & u & v \end{bmatrix}^T
+$$
+
+Per ogni misura posso impostare un sistema.
+
+$$
+\begin{cases}
+w_1 = m_{1,1} * x + m_{1,2} * y + m_{1,3}*z + m_{1,4} \newline
+w_2 = m_{2,1} * x + m_{2,2} * y + m_{2,3}*z + m_{2,4} \newline
+w_3 = m_{3,1} * x + m_{3,2} * y + m_{3,3}*z + m_{3,4}
+\end{cases}
+$$
+
+Sapendo che $u = w_1/w_3$ e $v = w_2/w_3$ troviamo un sistema con due equazioni (per semplicità di scrittura non scrivo per esteso $w_1, w_2, w_3$ trovati sopra):
+
+$$
+\begin{cases}
+u*w3 - w1 = 0 \newline
+v*w3 - w2 = 0
+\end{cases}
+$$
+
+Quindi per trovare gli 11 parametri mi servono almeno 6 misure.
+
+(Arrivata fino a lezione "Calibrazione con tecnica DLT (Direct Linear Transform)")
