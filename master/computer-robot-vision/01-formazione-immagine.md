@@ -53,11 +53,46 @@ Questa branca della computer vision non è parte del corso, non abbiamo abbastan
 
 ## Dettagli tecnici sulle camere
 
-### Necessità di lenti, lent sottili
+### Necessità di lenti, lenti sottili
+
+Dal punto di vista fisico il modello pinhole è irrealizzabile, in quanto il foro (centro di proiezione) non può essere infinitesimo nella realtà.
+
+Il foro è di una dimensione finita, da cui passaranno più raggi paralleli, passiamo dall'avere un punto immagine ad avere un "cerchio immagine". I cerchi si vanno a sovrapporre e questo è un problema. Se restringo troppo il cerchio (cerchio infinitesimo) entra troppa poca energia (energia infinitesima). 
+
+Si introduce quindi l'uso di lenti. Di solito si hanno più lenti insieme, noi ci soffermiamo su modello con singola **lente sottile**.
+I raggi arrivano alla lente e convergono in un punto. Questo punto è chiamato **fuoco** della lente (questo se tutti i raggi arrivano paralleli tra loro). La lente è composta da due calotte sferiche, al centro troviamo un piano. Il centro di questo. La distanza tra il centro di questo piano e il fuoco è chiamata **focale della lente**.
+Se da un punto $P$ arrivano raggi non paralleli tra loro troveremo un punto $P'$ diverso dal fuoco, in cui il punto immagine è a fuoco.
+**Legge di Snell** (con $Z$ distanza centro lente - punto nel mondo e $Z'$ distanza centro lente - punto immagine): 
+$$
+1/Z + 1/Z' = 1/f
+$$
+
+I vari punti del mondo vanno quindi a fuoco ad una distanza diversa.
 
 ### Cerchi di sfocamento e profondità di campo
 
+Il fatto che i vari punti vadano a fuoco a distanze diverse e che il piano immagine sia ad una distanza fissa porta ad avere dei "cerchi" sul piano immagine, i così detti **cerchi di sfocamento**.
+Dipendono sia dalla posizione a cui vanno a fuoco i punti e dalla posizione del piano immagine.
+
 ### Spettro del campo elettromagnetico
+
+Legato alle lenti è l'indice di rifrazione, che varia a seconda della lunghezza d'onda dello spettro.
+(TODO trovare un senso a questa lezione).
 
 ### Frequenza di campionamento
 
+I dispositivi digitali abbiamo una serie di elementi sensibili (sensori) disposti ad una certa distanza. La distanza tra essi fa si che il dispositivo abbia una specifica frequenza di campionamento legata anche alla lunghezza d'onda. 
+Per catturare lunghezze d'onda di $n$ micrometri dobbiamo avere sensori disposti ad almeno $n/2$ micrometri tra loro.
+
+Il diametro dei cerchi di sfocamento deve essere inferiore alla spaziatura dei sensori. Inizio a percepire la presenza dei cerchi di sfocamento esce dai confini del singolo sensore e viene percepito in più sensori.
+
+Diametro cerchi di sfocamento:
+$$
+D/Z' * (Z'_{segnato} - Z')
+$$
+
+$Z'$ è il punto dove va a fuoco il punto.
+$Z'_{segnato}$ è la distanza del piano immagine.
+$D$ è il diaframma della camera, che limita i raggi entranti che si proiettano sul piano immagine.
+
+Agendo sul diaframma riesco a modificare la **profondità di campo**.
