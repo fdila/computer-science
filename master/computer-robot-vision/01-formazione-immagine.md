@@ -96,3 +96,46 @@ $Z'_{segnato}$ è la distanza del piano immagine.
 $D$ è il diaframma della camera, che limita i raggi entranti che si proiettano sul piano immagine.
 
 Agendo sul diaframma riesco a modificare la **profondità di campo**.
+
+## Difetti e problemi
+
+### Aberrazioni cromatiche
+
+Indice di rifrazione è dipendente dalla lunghezza d'onda. 
+
+Allontanandosi dal centro immagine ci allontaniamo dal modello ideale pinhole.
+
+Messa a fuoco dipende anche dalle lunghezza d'onda, aberrazione cromatica.
+
+### FOV, Field of View, distorsioni radiale e tangenziale
+
+**FOV**: più è lungo l'obiettivo più è "stretta" l'immagine.
+
+Esempio lente fisheye: focale corta, grande FOV ma tante aberrazioni che ci fanno discostare da modello pinhole.
+
+**Distorsione radiale**: distorsioni più intense delle tangenziali.
+A loro volta si suddividono in:
+- **a cuscinotto**: distanze centro immagine crescono.
+- **a barilotto**: distanze centro immagine descrescono.
+
+![distorsioni](img/distorsioni-radiali.png)
+*In rosso distorsione a cuscinotto, in blu distorsione a barilotto*
+
+In funzione della distanza dal centro immagine la proiezione nominale cresce lungo il raggio oppure decresce lungo il raggio. 
+Quindi spostamento punto immagine lungo la retta, in avanti o indietro ma resta sempre sulla retta.
+
+**Distorsione tangenziale**: Il punto proiettato si sposta dalla retta di proiezione in modo ortogonale al raggio.
+
+<u>**Le distorsioni non sono riconducibili ad un modello lineare di proiezione**</u>
+
+Posso applicare un algoritmo per rimuovere distorsioni prima e successivamente applicare il modello lineare di proiezione.
+
+### Vignetting
+
+Cresce con lunghezza focale e cresce con distanza da centro immagine.
+Il passaggio tra i vari "pezzi" dell'obiettivo fa perdere i raggi sui bordi interni dell'ottica. 
+L'intensità luminosa media decresce al crescere della distanza dal centro immagine.
+Questo problema aumenta all'aumentare della lunghezza dell'ottica.
+
+## Calibrazione della proiezione
+
