@@ -258,3 +258,22 @@ $$
 Quindi _teoricamente_ per trovare gli 11 parametri mi servono almeno 6 misure, però non ha senso in quanto ci saranno sicuramente errori nelle misure. Si usano centinaia di punti.
 
 Andiamo a fare una regressione andando a minimizzare il quadrato degli errori.
+
+Da una parte ho lo spazio tridimensionale dei punti (x,y,z) e lo spazio bidimensionale dello spazio 2d piano immagine con i punti (u, v).
+Devo coprire tutto lo spazio.
+
+Con DLT i vari componenti della matrice $M$ non hanno una struttura precisa, troviamo solo dei valori numerici, non riflettono la struttura "vera" della matrice con proiezioni, aspect ratio etc.
+
+Aspetto pratico: immagine con un pattern (scacchiera o pallini), nel mondo reale metto pattern planare, così devo solo trovare la posizione del pattern planare e trovo successivamente la posizione dei pallini/quadrati conoscendo la posizione del pattern.
+Metto sistema di riferimento mondo in un posto comodo, poi faccio triangolazione tra sistema e pattern planare.
+
+![Segmento AB -> pattern planare, O -> origine sistema riferimento, segmento OR -> baseline](img/dlt_triangolazione.png){ width=60% }
+
+Questa triangolazione è soggetta ovviamente a incertezze nelle misure.
+Questa incertezza è non-costante, la distribuzione degli errori cambia al variare della distanza del punto dall'osservatore.
+
+La precisione con il quale trovo AB dipende molto dalla distanza OR.
+
+Dobbiamo rappresentare anche l'incertezza delle misure. Come? TODO chiedere
+
+Esistono configurazioni degeneri nello spazio 3D che non mi permettono di calcolare la matrice $M$. I punti che vado a prendere devono giacere su piani diversi.
