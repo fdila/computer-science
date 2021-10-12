@@ -1,3 +1,7 @@
+% Teoria della Computazione, 2020/2022
+% Federica Di Lauro
+% 
+
 # Prerequisiti vari
 
 ## Prerequisiti computazione

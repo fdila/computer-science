@@ -1,3 +1,7 @@
+% Architetture Dati, 2020/2021
+% Federica Di Lauro
+% 
+
 # Sistemi centralizzati
 
 **DBMS**: database management system:

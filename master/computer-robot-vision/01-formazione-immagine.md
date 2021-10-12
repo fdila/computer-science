@@ -1,3 +1,7 @@
+% Computer and Robot Vision, 2021/2022
+% Federica Di Lauro
+%
+
 # Formazione dell'immagine
 
 ## Modelli geometrici
@@ -28,8 +32,8 @@ Distanza piano immagine e centro proiezione è la distanza focale $f$, l' asse c
 Sapendo che $P'$ giace sul piano immagine possiamo dire che $z' = f$.
 Sapendo anche che P e P' giacciono sulla stessa retta abbiamo che:
 
-![pinhole2](img/pinhole2.png)
-![pinhole3](img/pinhole3.png)
+![pinhole2](img/pinhole2.png){ width=50% }
+![pinhole3](img/pinhole3.png){ width=20% }
 
 Se parto da immagine e trovo retta di interpretazione ho perdita di informazione, in quanto so trovare la retta ma non so trovare qual è il punto nel mondo, in quanto potrebbe trovarsi ovunque sulla retta trovata. Possibile soluzione è la stereoscopia.
 
@@ -118,8 +122,7 @@ A loro volta si suddividono in:
 - **a cuscinotto**: distanze centro immagine crescono.
 - **a barilotto**: distanze centro immagine descrescono.
 
-![distorsioni](img/distorsioni-radiali.png)
-*In rosso distorsione a cuscinotto, in blu distorsione a barilotto*
+![In rosso distorsione a cuscinotto, in blu distorsione a barilotto](img/distorsioni-radiali.png){ width=60% }
 
 In funzione della distanza dal centro immagine la proiezione nominale cresce lungo il raggio oppure decresce lungo il raggio. 
 Quindi spostamento punto immagine lungo la retta, in avanti o indietro ma resta sempre sulla retta.
@@ -147,7 +150,7 @@ Tornando alla proiezione del modello pin hole avevamo che:
 
 $$
 \begin{cases}
-u = f*(X/Z) \newline
+u = f*(X/Z) \\
 v = f*(Y/Z)
 \end{cases}
 $$
@@ -156,7 +159,7 @@ Se abbiamo punto immagine $P^C$ ovvero il punto immagine in coordinate omogenee 
 
 $$
 \begin{cases}
-u = w_1/w_3 \newline
+u = w_1/w_3 \\
 v = w_2/w_3
 \end{cases}
 $$
@@ -165,8 +168,8 @@ Sappiamo anche che:
 
 $$
 \begin{cases}
-w_1 = fx \newline
-w_2 = fy \newline
+w_1 = fx \\
+w_2 = fy \\
 w_3 = z
 \end{cases}
 $$
@@ -237,8 +240,8 @@ Per ogni misura posso impostare un sistema.
 
 $$
 \begin{cases}
-w_1 = m_{1,1} * x + m_{1,2} * y + m_{1,3}*z + m_{1,4} \newline
-w_2 = m_{2,1} * x + m_{2,2} * y + m_{2,3}*z + m_{2,4} \newline
+w_1 = m_{1,1} * x + m_{1,2} * y + m_{1,3}*z + m_{1,4} \\
+w_2 = m_{2,1} * x + m_{2,2} * y + m_{2,3}*z + m_{2,4} \\
 w_3 = m_{3,1} * x + m_{3,2} * y + m_{3,3}*z + m_{3,4}
 \end{cases}
 $$
@@ -247,11 +250,11 @@ Sapendo che $u = w_1/w_3$ e $v = w_2/w_3$ troviamo un sistema con due equazioni 
 
 $$
 \begin{cases}
-u*w3 - w1 = 0 \newline
+u*w3 - w1 = 0 \\
 v*w3 - w2 = 0
 \end{cases}
 $$
 
-Quindi per trovare gli 11 parametri mi servono almeno 6 misure.
+Quindi _teoricamente_ per trovare gli 11 parametri mi servono almeno 6 misure, però non ha senso in quanto ci saranno sicuramente errori nelle misure. Si usano centinaia di punti.
 
-(Arrivata fino a lezione "Calibrazione con tecnica DLT (Direct Linear Transform)")
+Andiamo a fare una regressione andando a minimizzare il quadrato degli errori.

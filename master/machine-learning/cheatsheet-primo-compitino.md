@@ -4,7 +4,6 @@
 
 $$
 |X| = \Pi|A_i| \\
-
 \text{con Ai attributo}
 $$
 
@@ -18,7 +17,6 @@ $$
 
 $$
 |H|_{sem} = 1 + \Pi(|A_i| +1)
-
 $$
 
 1 fuori produttoria rappresenta l'ipotesi più specifica:se un'ipotesi ha almeno 1 attributo vuoto è uguale a qualsiasi altra ipotesi con 1 attributo vuoto
@@ -41,6 +39,7 @@ $$
   $$
   H[X] = - \sum p_i * log_2p_i
   $$
+  
 * Entropia condizionata pt1
   
   $$
