@@ -277,3 +277,50 @@ La precisione con il quale trovo AB dipende molto dalla distanza OR.
 Dobbiamo rappresentare anche l'incertezza delle misure. Come? TODO chiedere
 
 Esistono configurazioni degeneri nello spazio 3D che non mi permettono di calcolare la matrice $M$. I punti che vado a prendere devono giacere su piani diversi.
+
+### Calibrazione con metodo Zhang
+
+- Homography: si stanzia in un'omografia tra piani. TODO what
+- Parametri intrinseci/estrinseci.
+
+Immagini utilizzate: target planare, solitamente scacchiera. 
+Vengono determinati i punti di intersezione tra quadrati neri e quadrati bianchi.
+Non fornisco l'informazione rispetto ad un unico sistema di riferimento.
+Ciascun insieme di punti è noto nel suo sistema di riferimento (ovvero la scacchiera).
+
+La tecnica Zhang lavora in 2 fasi. Inizialmente determina i parametri intrinseci, utilizzando le diverse immagini raccolte.
+Dopo di che posso trovare gli estrinseci.
+
+Questo approccio permette anche di calibrare i parametri di distorsione. TODO chiedere
+
+**Caratterizzazione di matrici proiezione prospettica**
+
+Caratteristiche della matrice M di proiezione:.
+
+$$
+M = 
+\begin{bmatrix}
+a_{1,1} & a_{1,1} & a_{1,1} & b_1 \\
+a_{1,1} & a_{1,1} & a_{1,1} & b_2 \\
+a_{1,1} & a_{1,1} & a_{1,1} & b_3 \\
+\end{bmatrix}
+$$
+
+Se chiamiamo $A$ la matrice composta dagli $a_{i,j}$ si ha sempre che:
+
+$$
+det(A) \neq 0
+$$
+
+Se abbiamo una matrice con _zero skew_ possiamo dire che:
+
+$$
+(a_1 * a_3) \cdot (a_2 * a_3) = 0
+$$
+
+Se abbiamo una matrice con _aspect ratio unitario_ abbiamo:
+
+$$
+(a_1 * a_3) \cdot (a_1 * a_3) = (a_2 * a_3) \cdot (a_2 * a_3)
+$$
+
