@@ -191,12 +191,11 @@ $$
 M \cdot T^C_W
 $$
 
-Problemi ancora aperti (boh ma ne ha parlato nelle rec precedenti?):
+Problemi ancora aperti:
 - centro immagine spostato
-- aspect ratio non unitario
-**TODO CHIEDERE!!!**
+- aspect ratio non unitario: dobbiamo posizionare correttamente il valore di posizione in memoria nel piano immagine continuo. Dovuto alla disposizione degli elementi sensoriali e la loro spaziatura su asse x e y.
 
-Per il primo punto abbiamo una pura tralsazione.
+Per il primo punto abbiamo una pura tralsazione, per il secondo troviamo il rapporto tra la spaziatura sulle x e la spaziatura sulle y.
 
 $$
 \begin{bmatrix}
@@ -274,13 +273,16 @@ Questa incertezza è non-costante, la distribuzione degli errori cambia al varia
 
 La precisione con il quale trovo AB dipende molto dalla distanza OR.
 
-Dobbiamo rappresentare anche l'incertezza delle misure. Come? TODO chiedere
+Dobbiamo rappresentare anche l'incertezza delle misure. Come? Lo scopriremo nel futuro.
 
 Esistono configurazioni degeneri nello spazio 3D che non mi permettono di calcolare la matrice $M$. I punti che vado a prendere devono giacere su piani diversi.
 
 ### Calibrazione con metodo Zhang
 
-- Homography: si stanzia in un'omografia tra piani. TODO what
+NB sezione fatta mooolto poco, il prof voleva quasi tagliarla, basta sapere che esiste in pratica.
+
+- Homography: si stanzia in un'omografia tra piani. Omografia -> punti di un piano finiscono in corrispondenza coi punti di un altro piano. Rappresentabile come trasformazione in coordinate omogenee.
+
 - Parametri intrinseci/estrinseci.
 
 Immagini utilizzate: target planare, solitamente scacchiera. 
@@ -291,11 +293,11 @@ Ciascun insieme di punti è noto nel suo sistema di riferimento (ovvero la scacc
 La tecnica Zhang lavora in 2 fasi. Inizialmente determina i parametri intrinseci, utilizzando le diverse immagini raccolte.
 Dopo di che posso trovare gli estrinseci.
 
-Questo approccio permette anche di calibrare i parametri di distorsione. TODO chiedere
+Questo approccio permette anche di calibrare i parametri di distorsione.
 
 **Caratterizzazione di matrici proiezione prospettica**
 
-Caratteristiche della matrice M di proiezione:.
+Caratteristiche della matrice M di proiezione:
 
 $$
 M = 
