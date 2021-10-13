@@ -1,3 +1,7 @@
+% Machine Learning, 2020/2021
+% Federica Di Lauro
+%
+
 # Teoria primo compitino
 
 - Istanza $x \in X$:  un fatto che è avvenuto (insieme di valori degli attributi)

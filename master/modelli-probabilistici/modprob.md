@@ -1,3 +1,7 @@
+% Modelli Probabilistici, 2020/2022
+% Federica Di Lauro
+% 
+
 # Modelli Probabilistici per le Decisioni
 
 ## Richiami di statistica
@@ -54,8 +58,6 @@ Un cammino è bloccato sse vale una delle 3 condizioni:
 
 $$
 x_n = ax_{n-1} \\
-
-
 0 \leq x_n \leq m
 $$
 
@@ -208,7 +210,6 @@ $$
       0 & I
     \end{array}
     \right)
-
 $$
 
 $Q$ matrice che rappresenta le relazioni tra gli stati transienti
@@ -349,8 +350,6 @@ Ad esempio se ho $k$ osservazioni e voglio predire lo stato al tempo $n$, filtro
 
 $$
 P(X_k | e_{1:t}) \\
-
-
 per 1 \leq k < t
 $$
 
