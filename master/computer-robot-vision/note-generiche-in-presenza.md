@@ -9,3 +9,10 @@
 - assignment 2? wtf
 
 - D/z(z_segnato_primo - z_primo) <-cose sfocamento con diaframma
+
+## 13.10.2021
+
+Per il problema del fascio di rette in cui manca la retta verticale possiamo girare il sistema di riferimento e farla diventare la retta orizzontale. Quella retta non mi serve per le camere. Teniamo così visto che è meglio avere 1 parametro che 3.
+
+Riguardare distorsione radiale!
+
