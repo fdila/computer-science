@@ -16,3 +16,7 @@ Per il problema del fascio di rette in cui manca la retta verticale possiamo gir
 
 Riguardare distorsione radiale!
 
+## 20.10.2021
+
+- cerchi di sfocamento: triangoli simili
+

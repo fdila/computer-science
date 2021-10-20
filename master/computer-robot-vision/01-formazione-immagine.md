@@ -375,9 +375,8 @@ Se ho scena statica posso fare la stessa foto con esposizione diversa e mettere 
 
 Kinect 1: NON È UNA CAMERA 3D, fa triangolazione con due camere.
 
-Funzionano sul principio ToF.
-
-TODO se non hai nulla da fare chiedi.
+Funzionano sul principio ToF. Differenza con lidar: il lidar gira.
+Flash lidar == camera 3D.
 
 ### Visori notturni
 
