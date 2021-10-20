@@ -326,3 +326,75 @@ $$
 (a_1 * a_3) \cdot (a_1 * a_3) = (a_2 * a_3) \cdot (a_2 * a_3)
 $$
 
+## Aspetti tecnologici
+
+Sensori a stato solido.
+
+### CCD
+
+Matrice di elementi nelle quali viene svolta la trasduzione. In ogni elemento sensibile si accumula una carica.
+Tra gli elementi sensibili c'è un registro di scorrimento.
+Tra ogni colonna abbiamo una colonna di registri a scorrimento, che vanno poi a scrivere in una riga di registri a scorrimento. **Interline transfer**.
+La presenza di colonne di registri implica la presenza di zone cieche tra una colonna di elementi sensibili e l'altra. Questo problema viene risolto con l'utilizzo di microlenti applicate sopra agli elementi sensibili e che coprono anche i registri, in modo da concentrare la luce in arrivo sull'elemento sensibile.
+
+Rumore: ogni volta che la carica si sposta c'è rumore. Soffrono anche di rumore termico.
+
+Per risparmiare i produttori hanno inventato la scansione interlacciata, ovvero la scansione delle righe della matrice avviene su due tempi, in un primo tempo viene scansionata la riga pari, nel tempo successivo la riga dispari. Questo permette di utilizzare un solo registro a scorrimento per due righe. Se abbiamo una scena dinamica ci troveremo con immagini strane, magari con elementi raddoppiati in quanto i tempi di esposizione di righe pari e dispari è diverso.
+
+Il problema di interlacing è vecchio, ormai si ha la **progressive scan**
+
+Esiste anche la struttura chiamata **frame transfer**: gli elementi ciechi non sono tra le colonne ma sono in uno spazio separato.
+
+I sensori a stato solido sono caratterizzati da una coda verso il near infra-red. Le frequneze d'onda sono trasdotte con intensità diverse. 
+Questo implica uno scostamento dalla fedeltà cromatica.
+
+### CMOS
+
+Ho contemporaneamente sul disposistivo sensoriale una capacità di elaborazione.
+
+Si ha indirizzamento di pixel: si riesce ad indirizzare ogni singolo elemento.
+
+Il tempo tra una lettura e l'altra è (spesso) il tempo di esposizione, ovvero per quanto facciamo "caricare" l'elemento sensibile.
+
+Legato al tempo di esposizione è il **motion blur**: se integro l'immagine per troppo tempo e il soggetto/scena è in movimento fa si che i punti degli oggetti di interesse passino per i diversi pixel.
+
+**Rolling shutter**: shutter rolla tra i vari pixel dell'immagine, ho tempi di esposizione diversi tra i vari elementi sensibili della camera.
+
+**Global shutter**: shutter globale, stesso tempo di esposizione tra tutti i pixel. È più difficile da fare con tecnologia CMOS.
+
+Si ha un rapporto lineare tra energia in ingresso e in uscita dal sensore. È un rapporto lineare fino alla fascia di saturazione.
+Dovuto alla saturazione è il problema di **blooming/smearing**: la carica che fa andare in saturazione un sensore si va poi a "espandere" sui sensori vicini, andandoli a saturare.
+
+**HDR**: range dinamico, delta tra valore minimo e valore massimo. 
+Se ho scena statica posso fare la stessa foto con esposizione diversa e mettere assieme le varie parti della scena, ottendeno un range dinamico alto. Esistono anche telecamere a range dinamico: 
+
+- telecamere HDR che fanno doppia esposizione
+- telecamere che misurano in modo continuo la carica su ogni pixel, se un pixel satura lo svuota e conta quante volte lo svuota. Quindi ogni pixel ha un range molto più alto rispetto al range del solo sensore.
+
+### Camere 3D
+
+Kinect 1: NON È UNA CAMERA 3D, fa triangolazione con due camere.
+
+Funzionano sul principio ToF.
+
+TODO se non hai nulla da fare chiedi.
+
+### Visori notturni
+
+In condizioni estreme si raffreddano le camere per ridurre effetto joule. 
+
+Nei visori notturni si illumina l'area con luce NIR, con i sensori riesco a vedere luce NIR.
+
+### Camere a colori
+
+Posso avere 3 senso R G B separati per ogni pixel, ma è molto improbabile.
+
+La maggior parte delle camere esistenti segue l'approccio basato sul **bayer filter**. Ogni blocco di 4 pixel ha 2 pixel ricoperti da un filtro per il verde, un pixel per il blu e uno per rilevare il rosso.
+Si hanno poi algoritmi di interpolazione per i colori.
+
+Si può avere sottocampionamento sulla crominanza rispetto alla luminanza.
+
+Le camere professionali possono avere algoritmo di interpolazione di colore integrat, oppure mi danno i valori dei pixel associati al loro "colore" (quindi se è un pixel con filtro R, G o B)
+
+**Stacked sensors**: impiliamo più strati, ogni strato ha un sensore R, G o B e da filtri che fanno passare la luce del colore corrispondente.
+

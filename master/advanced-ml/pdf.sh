@@ -1,0 +1,1 @@
+pandoc 01-deep-learning.md --toc -o aml.pdf
