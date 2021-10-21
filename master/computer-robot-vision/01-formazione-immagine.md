@@ -397,3 +397,25 @@ Le camere professionali possono avere algoritmo di interpolazione di colore inte
 
 **Stacked sensors**: impiliamo più strati, ogni strato ha un sensore R, G o B e da filtri che fanno passare la luce del colore corrispondente.
 
+## Event Based Cameras
+
+Nuovo tipo di camere che registra le variazioni di luce (movimento) anzichè registrare immagini statiche.
+
+Sono costituite da una matrice di pixel, ma questi pixel sono asincroni tra di loro e "scattano" quando viene rilevato un cambiamento di luce sul sensore: quando il cambiamento è positivo (incremento di luce) si ha un evento positivo, e viceversa.
+
+Non si hanno più immagini ma stream di eventi.
+
+In una camera normale se c'è movimento molto veloce si ha motion blur, mentre le event cameras riescono a registrare eventi con una frequenza di 1 $\mu$ s
+
+Nelle camere ad eventi non c'è informazione ridondante: si hanno solo informazioni su ciò che sta cambiando, il che porta a non avere uno "sfondo" e riduce il data rate.
+
+Si hanno anche vantaggi sul HDR.
+
+Si possono usare per **optical flow**, **visual odometry**, **SLAM**
+
+
+
+
+
+
+
