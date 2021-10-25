@@ -42,5 +42,54 @@ In questo modo riduciamo lo spazio di ricerca da $R^2$ a $R^1$.
 
 ### Algoritmi
 
-#### Algoritmi a correlazione
+#### Correlazione
+
+Ricerca di pattern tra le due immagini (segnali).
+
+**Rettifica** delle immagini per fare stereoscopia, ovvero modifica delle immagini per avere le camere parallele (TODO chiedere linee epipolari?). 
+Viene più facile ricercare le corrispondenze.
+
+Cerco scostamento del punto della primaria se lo immergo nella secondaria per trovare il suo corrispondente. Questo scostamento è chiamato **disparità**.
+
+Diparità sparsa vs densa (pixel vs feature) TODO CHIEDERE COME FUNZIONA DENSA.
+
+C'è anche il problema **foreshortening**, lo stesso pezzo di mondo può apparire di dimensioni diverse a seconda della prospettiva, quindi non posso basarmi solo su disparita x,y,z ma andrebbe presa in considerazione anche il cambio di dimensioni.
+
+Regione $R(P_l)$ nel piano $r$ in cui vado a cercare il punto $P_l$ del piano $l$.
+Questa regione si trova sulla linee epipolare.
+
+Se da $P_l$ vado alle stesse coordinate nell'immagine $I_r$ e sommo la disparità $P_l$.
+$\forall d(P_l) \in R(P_l)$ calcolo quanto vale la funzione che dice quanto sono simili i pixel, funzione $\psi(u,v)$ (u e v sono pixel).
+Esistono diverse funzioni come crosscorrelazione, somma valori assoluti, somma quadrati...
+
+In generale viene calcolata cifra di merito 
+$$
+c(d) = \sum^W_{k=-W} \sum^W_{l=-W} \psi(I_l(i+k, j+l),I_r(i+k - d_1, j+l -d_2))
+$$
+
+con $W$ dimensione finestra della regione di interesse.
+
+La funzione $\psi$ può essere:
+
+- crosscorrelazione $(u \cdot v)$
+- SSD, sum of squared differencies: $-(u-v)^2$
+- SAD, sum of absolute differencies (più veloce da calcolare)
+
+Quanto deve essere grande la finestra? Abbastanza da trovare qualcosa di riconoscibile nel segnale. 
+Fino a ora consideravamo W uguale per altezza e larghezza, ma è una semplificazione, possiamo avere dimensioni diverse.
+
+#### Analisi multirisoluzione
+
+Presa un'immagine posso applicarci un filtro passabasso e ottengo un'immagine derivata. 
+Ottengo un'immagine con meno "dettagli" (vengono tagliate le alte frequenze). 
+Posso applicare su questa nuova immagine un altro filtro passabasso e così via.
+
+L'insieme di queste immagini è chiamato lo *scale space*
+
+Posso partire da un'immagine con molte frequenze tagliate, in quanto c'è meno segnale e quindi ho meno "cose" che posso associare.
+Prendo i risultati che ottengo ad una scala alta come base per vincolare la ricerca ad una scala più bassa. TODO ho capito bene?
+
+**Discontinuity preserving**: i filtri passabassi gaussiani non garantiscono che la posizione dei "bordi" rimanga la stessa nelle varie immagini.
+Esistono alcuni algoritmi che sono in grado di farlo: anisotropic diffusion, steerable filters.
+
 
