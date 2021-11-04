@@ -40,18 +40,20 @@ $$
 $$
 In questo modo riduciamo lo spazio di ricerca da $R^2$ a $R^1$.
 
-### Algoritmi
+### Algoritmi pixel-based
 
 #### Correlazione
 
 Ricerca di pattern tra le due immagini (segnali).
 
-**Rettifica** delle immagini per fare stereoscopia, ovvero modifica delle immagini per avere le camere parallele (TODO chiedere linee epipolari?). 
+**Rettifica** delle immagini per fare stereoscopia, ovvero modifica delle immagini per avere le camere parallele. 
 Viene più facile ricercare le corrispondenze.
 
-Cerco scostamento del punto della primaria se lo immergo nella secondaria per trovare il suo corrispondente. Questo scostamento è chiamato **disparità**.
+Cerco scostamento del punto della primaria se lo immergo nella secondaria per trovare il suo corrispondente. Questo scostamento è chiamato **disparità**. Disparità ha dominio in 2 variabili e codominio in 2.
 
-Diparità sparsa vs densa (pixel vs feature) TODO CHIEDERE COME FUNZIONA DENSA.
+Con camere rettificate la disparità ha dominio in 2 e codominio in 1. <- Più facile
+
+Diparità sparsa vs densa (pixel vs feature).
 
 C'è anche il problema **foreshortening**, lo stesso pezzo di mondo può apparire di dimensioni diverse a seconda della prospettiva, quindi non posso basarmi solo su disparita x,y,z ma andrebbe presa in considerazione anche il cambio di dimensioni.
 
@@ -84,12 +86,61 @@ Presa un'immagine posso applicarci un filtro passabasso e ottengo un'immagine de
 Ottengo un'immagine con meno "dettagli" (vengono tagliate le alte frequenze). 
 Posso applicare su questa nuova immagine un altro filtro passabasso e così via.
 
-L'insieme di queste immagini è chiamato lo *scale space*
+L'insieme di queste immagini è chiamato lo *scale space*.
 
 Posso partire da un'immagine con molte frequenze tagliate, in quanto c'è meno segnale e quindi ho meno "cose" che posso associare.
-Prendo i risultati che ottengo ad una scala alta come base per vincolare la ricerca ad una scala più bassa. TODO ho capito bene?
+Prendo i risultati che ottengo ad una scala alta come base per vincolare la ricerca ad una scala più bassa.
 
 **Discontinuity preserving**: i filtri passabassi gaussiani non garantiscono che la posizione dei "bordi" rimanga la stessa nelle varie immagini.
 Esistono alcuni algoritmi che sono in grado di farlo: anisotropic diffusion, steerable filters.
 
+#### Metodi a minimizzazione di energia
+
+Cerco una funzione di discontinuità.
+Cerco funzione per minimizzare il gradiente della funzione sui punti.
+TODO non ho capito nada.
+
+### Algoritmi feature-based
+
+Passo da un'immagine a una lista che descrive gli elementi delle immagini (sarebbero due liste, una lista per ogni immagine).
+
+Algoritmi per ricerca di feature, come SIFT.
+
+Criterio per valutare i match: similitudine del descrittore. Come similitudine prendiamo la vicinanza dei punti nello spazio delle coordinate che descrivono la feature.
+Faccio media pesata differenze tra gli elementi.
+
+Per ogni feature nella primaria trovo corrispondenze sulla linea epipolare. Trovo quindi i potenziali match, calcolo la similitudine e prendo la corrispondenza con similitudine maggiore.
+
+Operare prendendo indipendentemente le feature non è ottimale.
+
+#### Approcci multirisoluzione
+
+Anche per gli algoritmi feature based abbiamo approcci multirisoluzione.
+
+Se ho troppe feature il problema di ricerca di corrispondenze esplode.
+Per questo vado a cercare feature in immagini con meno frequenze etc etc come già visto.
+
+
+### Rettificazione
+Come già detto si possono rettificare le immagini per portarmi ad una situazione in cui le due camere sono allineate. Elimino effetti di non allineamenti degli assi ottici.
+
+### Vincoli usati in stereoscopia
+
+1. Unicità: ad un punto nella primaria associo UN punto nella secondaria. Le corrisponenze sono biunivoche. TODO non univocità dei match?? Come è possibile?
+
+2. Continuità: ipotizzo che il mondo che osservo sia fatto da superfici smooth/regolari. Non riusciamo bene a gestire il mondo discontinuo?
+
+3. Ordinamento: i punti nella secondaria appaiono nello stesso ordine (specchiato) della secondaria rispetto agli epipoli.
+
+4. Disparity gradient: se il valore di disparità che trovo nella soluzione è consistente posso avere dei delta di profondità maggiori. TODO?
+
+Vincoli più "geometrici":
+
+- cose piane TODO
+
+- Aumentare il numero di camere per avere vincolo epipolare plurioculare. Ad esempio con 3 camere.
+Dall'intersezione in $\pi3$ della linea epipolare coniugata che viene da $l1$ e $l2$ trovo un punto (o meglio, un'area intorno a quel punto) in $\pi3$ dove dovrebbe esserci il match. Approccio poco utilizzato attualmente.
+
+
+## Geometria epipolare
 

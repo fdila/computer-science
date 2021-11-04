@@ -20,3 +20,12 @@ Riguardare distorsione radiale!
 
 - cerchi di sfocamento: triangoli simili
 
+## 27.10.2021
+
+## 3.11.2021
+
+## 10.11.2021
+Chiedere:
+
+- Differenza aberrazioni/distorsioni
+

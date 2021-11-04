@@ -64,14 +64,21 @@ Dal punto di vista fisico il modello pinhole è irrealizzabile, in quanto il for
 Il foro è di una dimensione finita, da cui passaranno più raggi paralleli, passiamo dall'avere un punto immagine ad avere un "cerchio immagine". I cerchi si vanno a sovrapporre e questo è un problema. Se restringo troppo il cerchio (cerchio infinitesimo) entra troppa poca energia (energia infinitesima). 
 
 Si introduce quindi l'uso di lenti. Di solito si hanno più lenti insieme, noi ci soffermiamo su modello con singola **lente sottile**.
-I raggi arrivano alla lente e convergono in un punto. Questo punto è chiamato **fuoco** della lente (questo se tutti i raggi arrivano paralleli tra loro). La lente è composta da due calotte sferiche, al centro troviamo un piano. Il centro di questo. La distanza tra il centro di questo piano e il fuoco è chiamata **focale della lente**.
+I raggi arrivano alla lente e convergono in un punto. Questo punto è chiamato **fuoco** della lente (questo se tutti i raggi arrivano paralleli tra loro). La lente è composta da due calotte sferiche, al centro troviamo un piano. La distanza tra il centro di questo piano e il fuoco è chiamata **focale della lente**.
 Se da un punto $P$ arrivano raggi non paralleli tra loro troveremo un punto $P'$ diverso dal fuoco, in cui il punto immagine è a fuoco.
-**Legge di Snell** (con $Z$ distanza centro lente - punto nel mondo e $Z'$ distanza centro lente - punto immagine): 
+
+**Equazione delle lenti sottili** (con $Z$ distanza centro lente - punto nel mondo e $Z'$ distanza centro lente - punto immagine): 
 $$
-1/Z + 1/Z' = 1/f
+1/Z' - 1/Z = 1/f
 $$
 
 I vari punti del mondo vanno quindi a fuoco ad una distanza diversa.
+
+Le conseguenze dell'approssimazione lente sottile sono diverse:
+
+- I raggi che vengono rifratti nella lente subiscono un’unica deviazione;
+- La distanza focale (f) può essere presa indiﬀerentemente dal centro ottico o dalla superficie della lente;
+- I due fuochi sono simmetrici rispetto al centro ottico e le due distanze focali sono uguali.
 
 ### Cerchi di sfocamento e profondità di campo
 
@@ -80,8 +87,7 @@ Dipendono sia dalla posizione a cui vanno a fuoco i punti e dalla posizione del 
 
 ### Spettro del campo elettromagnetico
 
-Legato alle lenti è l'indice di rifrazione, che varia a seconda della lunghezza d'onda dello spettro.
-(TODO trovare un senso a questa lezione).
+Legato alle lenti è l'indice di rifrazione, che varia a seconda della lunghezza d'onda dello spettro. Quindi le varie componenti a lunghezza d'onda diversa possono subire aberrazioni dovute alla rifrazione.
 
 ### Frequenza di campionamento
 
@@ -92,11 +98,13 @@ Il diametro dei cerchi di sfocamento deve essere inferiore alla spaziatura dei s
 
 Diametro cerchi di sfocamento:
 $$
-D/Z' * (Z'_{segnato} - Z')
+\frac{D}{Z'} * (\overline{Z'} - Z')
 $$
 
 $Z'$ è il punto dove va a fuoco il punto.
-$Z'_{segnato}$ è la distanza del piano immagine.
+
+$\overline{Z'}$ è la distanza del piano immagine.
+
 $D$ è il diaframma della camera, che limita i raggi entranti che si proiettano sul piano immagine.
 
 Agendo sul diaframma riesco a modificare la **profondità di campo**.
@@ -119,6 +127,7 @@ Esempio lente fisheye: focale corta, grande FOV ma tante aberrazioni che ci fann
 
 **Distorsione radiale**: distorsioni più intense delle tangenziali.
 A loro volta si suddividono in:
+
 - **a cuscinotto**: distanze centro immagine crescono.
 - **a barilotto**: distanze centro immagine descrescono.
 
@@ -141,8 +150,6 @@ L'intensità luminosa media decresce al crescere della distanza dal centro immag
 Questo problema aumenta all'aumentare della lunghezza dell'ottica.
 
 ## Calibrazione della proiezione
-
-10 parametri? non ho capito
 
 Rappresentazione in forma matriciale della proiezione con uso di coordinate omogenee.
 
@@ -192,6 +199,7 @@ M \cdot T^C_W
 $$
 
 Problemi ancora aperti:
+
 - centro immagine spostato
 - aspect ratio non unitario: dobbiamo posizionare correttamente il valore di posizione in memoria nel piano immagine continuo. Dovuto alla disposizione degli elementi sensoriali e la loro spaziatura su asse x e y.
 
@@ -215,6 +223,7 @@ $$
 
 Moltiplicando tutte le matrici viste troviamo la matrice di proiezione totale.
 Per scrivere la matrice totale abbiamo bisogno di 10 parametri:
+
 - 3 di rotazione e 3 di traslazione per la matrice che rappresenta la rototraslazione tra camera e mondo
 - 1 (ovvero $f$) per la matrice che proietta il punto
 - 2 per la traslazione del centro immagine
@@ -275,11 +284,11 @@ La precisione con il quale trovo AB dipende molto dalla distanza OR.
 
 Dobbiamo rappresentare anche l'incertezza delle misure. Come? Lo scopriremo nel futuro.
 
-Esistono configurazioni degeneri nello spazio 3D che non mi permettono di calcolare la matrice $M$. I punti che vado a prendere devono giacere su piani diversi.
+Esistono configurazioni degeneri (scoperte da Faugeras (?)) nello spazio 3D che non mi permettono di calcolare la matrice $M$. I punti che vado a prendere devono giacere su piani diversi.
 
 ### Calibrazione con metodo Zhang
 
-NB sezione fatta mooolto poco, il prof voleva quasi tagliarla, basta sapere che esiste in pratica.
+NB sezione fatta mooolto poco, il prof voleva quasi tagliarla, basta sapere che esiste in pratica. Riferirsi al laboratorio pratico se si vogliono più info.
 
 - Homography: si stanzia in un'omografia tra piani. Omografia -> punti di un piano finiscono in corrispondenza coi punti di un altro piano. Rappresentabile come trasformazione in coordinate omogenee.
 
@@ -341,12 +350,9 @@ Rumore: ogni volta che la carica si sposta c'è rumore. Soffrono anche di rumore
 
 Per risparmiare i produttori hanno inventato la scansione interlacciata, ovvero la scansione delle righe della matrice avviene su due tempi, in un primo tempo viene scansionata la riga pari, nel tempo successivo la riga dispari. Questo permette di utilizzare un solo registro a scorrimento per due righe. Se abbiamo una scena dinamica ci troveremo con immagini strane, magari con elementi raddoppiati in quanto i tempi di esposizione di righe pari e dispari è diverso.
 
-Il problema di interlacing è vecchio, ormai si ha la **progressive scan**
+Il problema di interlacing è vecchio, ormai si ha la **progressive scan** in cui le righe sono scansionate una dopo l'altra.
 
 Esiste anche la struttura chiamata **frame transfer**: gli elementi ciechi non sono tra le colonne ma sono in uno spazio separato.
-
-I sensori a stato solido sono caratterizzati da una coda verso il near infra-red. Le frequneze d'onda sono trasdotte con intensità diverse. 
-Questo implica uno scostamento dalla fedeltà cromatica.
 
 ### CMOS
 
@@ -370,6 +376,11 @@ Se ho scena statica posso fare la stessa foto con esposizione diversa e mettere 
 
 - telecamere HDR che fanno doppia esposizione
 - telecamere che misurano in modo continuo la carica su ogni pixel, se un pixel satura lo svuota e conta quante volte lo svuota. Quindi ogni pixel ha un range molto più alto rispetto al range del solo sensore.
+
+**Efficienza quantica**: l'intensità del segnale catturato dal sensore varia a seconda della lunghezza d'onda. I sensori a stato solido sono caratterizzati da una coda verso il near infra-red. Le frequenze d'onda sono trasdotte con intensità diverse. 
+Questo implica uno scostamento dalla fedeltà cromatica.
+
+Bisogna inoltre **quantizzare** il segnale: a seconda del numero di bit abbiamo un rapporto segnale-rumore diverso. Esso è definito generalmente come $SNR = \mu / \sigma$. Il rumore della camera può produrre deviazione standard alta e influire sul numero di byte realmente necessari: sono necessari di 50dB di rapporto segnale rumore per avere 8 bit di dati significativi.
 
 ### Camere 3D
 
