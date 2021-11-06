@@ -101,6 +101,10 @@ Partially true
 
 _First part is true, second part is false_
 
+**In a neural network the nonlinearity causes the most interesting loss function to become non convex**
+
+True
+
 - **The loss function produces a numerical score that also depends on the set of the parameters which characterizes the FFN model**
 
 True
@@ -129,9 +133,11 @@ True
 - **Advantages of the ReLU functions are**
 
     - [x] ReLUs are much simpler computationally
-    - [ ] Reduced likelihood of the gradient to vanish TODO
+    - [x] Reduced likelihood of the gradient to vanish
     - [x] The gradient is constant for z>0
     - [ ] Differentiability
+
+2nd answer is true only for values >0
 
 - **Leaky ReLUs**
 
@@ -224,7 +230,7 @@ True
     - [ ] the addition of the L2 term modifies the learning rule by shrinking the weight factor by a costant factor on each parameter update
     - [x] L2 rescales the weights along the axes defined by the eigenvecotrs of the Hessian matrix
 
-    TODO: la penultima risposta è ambigua
+The 4th answer could be true if we interpret "constant" as proportional to the weight, but the proportionality is constant.
 
 - **Which of these sentences are true?**
     
@@ -245,12 +251,10 @@ True
     - [x] label smoothing makes models robust to possible errors in the training set
     - [x] label smoothing can help convergence of maximum likelihoo learning with a softmax classifier and hard targets
 
-TODO check con rec
-
 - **Which of these sentences is false?**
 
-    - [x] Multitask forces to share a set of parameters across different tasks
-    - [ ] Multitask improves generalization when tasks are very different
+    - [ ] Multitask forces to share a set of parameters across different tasks
+    - [x] Multitask improves generalization when tasks are very different
 
 - **Which of the following sentences are true?**
 
@@ -277,7 +281,7 @@ False
 - **Early stopping halt criterion**
 
     - [x] is typically based on the performance obtained on a validation set
-    - [ ]  is typically based on the performance obtained on the training set
+    - [ ] is typically based on the performance obtained on the training set
 
 - **The accuracy of the estimated mean of the gradient**
 
@@ -285,15 +289,15 @@ False
     - [ ] has a standard error which decreases linearly with the number of samples used
     - [x] it also depend on redundancies in sample data
 
-TODO check con rec
+2nd answer is false because the error decreses with square root trend
 
 - **Ill conditioning of the Hessian matrix of the cost function**
 
     - [x] can be partly overcome by using the momentum strategy
     - [x] can prevent the gradient to arrive to a critical point
-    - [ ] can imply the very small steps are needed to decrease the cost function
+    - [x] can imply the very small steps are needed to decrease the cost function
 
-TODO check con rec
+The third answer is ambiguous (as usual). Prof says it's true anyway.
 
 - **Local minima in deep learning problems**
 
@@ -329,9 +333,7 @@ TODO check con rec
 
     - [ ] it also takes into account the curvature of the cost function through the second order derivatives
     - [x] it uses the momentum strategy
-    - [ ] it is based on RMSProp
-
-TODO check con rec
+    - [x] it is based on RMSProp
 
 - **A good initialization procedure**
 
