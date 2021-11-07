@@ -269,3 +269,253 @@ These examples are called adversarial examples.
 A NN can be trained on the adversarial examples to improve the training.
 
 ## Optimization
+
+There are several differences between machine learning and pure optimization:
+
+- Machine learning acts indirectly, unlike optimization
+- Usually we want to optimize a performance measure P based on the test set and the problem may also be intractable
+- We optimize a different cost function (the loss) hoping that it optimizes P as well. Therefore we optimize P only indirectly
+- In pure optimization the optimization of the cost function is the goal itself
+
+Typically the loss function is a simple average over the training set:
+
+![](img/loss-funct.png){ width=100% }
+
+We would prefer to mimimize the objective function with respect to the training set using:
+
+![](img/loss-funct2.png){ width=50% }
+
+We call **risk** the function:
+
+![](img/risk.png){ width=50% }
+
+If we knew P_DATA, risk minimization would be reduces to a standard optimization task.
+
+Since we don't know it we minimize the **empirical risk**:
+
+![](img/emp-risk.png){ width=50% }
+
+where $m$ is the number of training examples.
+The whole process is known as **emprirical risk minimization**.
+
+Problems with empirical risk minimization:
+
+- It is prone to overfitting
+- The most effective optimization algotithms rely on gradient decent, but many loss functions have no useful derivatives
+
+We have to rely on a different approach: the quantity that we actually optimize is different from the quantity that we truly want to optimize
+
+Instead of minimizing the emprical risk, we minimize the **surrogate loss function**
+
+_A surrogate loss function acts as a proxy to empirical risk while being ”nice” enough to be optimized efficiently._
+
+Example: the negative log-likelihood is a surrogate to the 0-1 loss for classification. 
+
+In contrast to standard optimization we do not halt at local minima, but when the **early stopping halt criterion** is satisfied.
+
+Typically, the early stopping criterion is based on an underlying loss function such as the 0-1 loss measured on the validation set, and is designed to halt the algorithm before overfitting occurs.
+
+This can be roughly thought of as a way to reincorporate the true loss function in the learning process.
+
+### Loss function
+
+The loss function decomposes as a sum over the training examples
+
+_The gradient in this case is also an expectation over the training data_
+
+Computing this expectation exaclty is very expensive because it requires evaluating the model on every example in the entire dataset.
+
+We compute this expectation by randomly sampling a small number of examples from the dataset at each iteration
+
+The standard error of the mean estimated from m samples x is:
+
+![](img/error-gradient.png){ width=50% }
+
+where $\sigma$ is the standard deviation of the value of the samples.
+
+We can notice that there is less than linear return to using examples to extimate the gradient.
+
+Optimization algorithms converge faster if they can rapidly compute approximate estimates of the gradient rather then slowly computing the exact gradient.
+
+Furthermore there is redundancy in the training set, so computing the gradient on a small subsample of the training set makes sense since using all the samples wouldn't add much contribution.
+
+### Batch, online and minibatch
+
+Optimization algorithms that use all the training set to compute the gradient are called **batch** or **deterministic gradient methods**.
+
+Optimization algorithms that use a a single training sample to compute the gradient are called  **stocastic gradient methods** (or online methods).
+
+Optimization algorithms that use a small subsample of the training set are called **minibatch** or **minibatch stocastic methods**.
+
+(notice that we will be calling the last ones stocastic methods)
+
+#### Choosing the batch size
+
+Large batches provide a more accurate gradient, but less than linear returns.
+
+The batch size is usually a power of 2 to utilize GPU parallelization
+
+Small batches can offer a regularizing effect, but may require small learning rates to keep stability.
+
+Methods that only compute the update using the gradient can use small batch sizes (~100 samples), while methods that use second order derivatives require much larger batch sizes (~10000) expecially if H has a poor condition number.
+
+#### Sampling mini-batches
+
+The batches must be sampled at **random** because computing an unbiased estimate of the expected gradient require that the samples are indipendent.
+Also 2 subsequent gradient estimates must be indipendent from each other.
+
+We must **shuffle** the training set before selecting a minibatch. We usually shuffle the training set once and impose a fixed set of possible minibatches that training will use.
+
+### Problems in optimization
+
+#### Ill conditioning
+
+Ill-conditioning of the Hessian matrix is a prominent problem in most numerical optimization problems, convex or otherwise.
+Ill-conditioning is manifested in SGD by causing the algorithm to get stuck, in a sense that even very small steps increase the cost function.
+
+Even if the algorithms doesn’t get stuck, learning will proceed very slowly when the Hessian matrix has a large condition number.
+
+In multiple dimensions, there is a different second derivative for each direction at a single point.
+The condition number of the Hessian at this point measures how much the second derivatives differ from each other.
+When the Hessian has a large condition number, gradient descent performs poorly.
+This is because in one direction, the derivative increases rapidly, while in another direction, it increases slowly.
+Gradient descent is unaware of this change in the derivative so it does not know that it needs to explore preferentially in the direction where the derivative remains negative for longer.
+
+#### Local minima
+
+We will see that local minima are not necessarily a major problem (flat region is an acceptable solution).
+
+Local minima are only truly problematic if they have a much higher cost than the global minimum.
+
+#### Saddle points
+
+For many high-dimensional non-convex functions, local minima and maxima are in fact rare compared to saddle points.
+
+For first-order optimization algorithms that use only gradient information, the situation is unclear.
+The gradient can often become very small near a saddle point.
+On the other hand, gradient descent empirically seems to be able to escape saddle points in many cases.
+
+For Newton’s Method, saddle points constitute a major problem.
+This is because unlike gradient decent, which is designed to move downhill, Newton’s method actively seeks solutions at critical points where the
+gradient is zero.
+The proliferation of saddle points in high dimensional spaces explains why second order methods have failed to replace gradient decent for deep learning.
+
+#### Flat regions
+
+- They have zero gradient
+- It takes a long time to traverse this regions
+- Gradient wastes time circumnavigating tall mountains.
+
+#### Cliffs and exploding gradient
+
+Neural networks with many layers often have extremely steep regions resembling cliffs.
+
+If we encounter a cliff then the update step can move parameters extremely far. Gradient does not specify the optimal step size, only the optimal direction within an infinitesimal region.
+The traditional gradient descent propose to maje a very large step, but we can use the **clipping euristic** to reduce the step size to be small when we encounter a cliff.
+
+#### Additional problems
+
+- **Long term dependencies**: they arise when the computational graph is very deep and its result is vanishing and exploding gradient.
+- **Inexact gradients**: we only have an estimate of the gradient and the Hessian. This is not a big issue in NN training since the surrogate loss function tends to perform well enough.
+- **Poor correspondence between local and global structure**: if the direction that results in the most improvement locally does not point toward distant regions of much lower cost. Initialization is important for this reason.
+
+### Basic optimization algorithms
+
+#### Stochastic gradient descend
+
+- Most used algorithm for deep learning
+
+- Uses minibatches
+
+It is common to deacay the learning rate linearly until a certain iteration.
+
+#### Momentum
+
+It accumulates the previous gradients. So if, for example, we are going down a slope the learning rate will increase
+
+We can use SGD with momentum.
+
+Some variants of the Momentum method exists, like Nsterov Momentum which adds a correction factor to the standard momentum.
+
+#### Delta-bar-delta
+
+If the partial derivative in respect to one parameter remains the same, increase the learning rate, otherwise, if that partial derivative change
+sign, decrease.
+
+#### AdaGrad
+
+Scale the gardient according to historical norms.
+
+- Learning rates of parameters with high partial derivatives decrease fast.
+
+- Enforces progress in more gently sloped directions
+
+- Nice properties for convex optimization but for deep learning it decreases the learning rate too much.
+
+#### RMSProp (Root Mean Square Propagation)
+
+Modification of AdaGrad to perform better in nonconvex problems.
+
+AdaGrad accumulates scince the beginning, RMSProp uses an exponentially weighted moving average.
+
+#### Adam (Adaptive Moments)
+
+Variation of RMSProp + Momentum.
+
+- Momentum is incorporated directly as an estimate of the first order moment
+
+- In RMSProp momentum is included after rescaling the gradients
+
+- Adam also add bias correction to the moments to account for their initialization at the origin
+
+#### What algorithm to choose?
+
+Most popular are: SGD, SGD with momentum, RMSProp, RMSProp with momentum, AdaDelta and Adam.
+
+There is no clear choice.
+
+### Parameters initialization
+
+The initialization:
+
+- can determine if the algorithm coverges at all
+- modern techniques are simple and heuristic
+- the only property known is the *need to break the symmetry*
+
+Common initialization choices are **random** and **orthogonal matrices**, the first one is cheaper and performs well.
+
+Biases are usually chosen heuristically.
+
+**Gaussian initialization**:
+
+- Choice of Gaussian or uniform distribution doesn't seem to affect much but the scale of the distribuition matters: _large weights break symmetry more but may explode_
+
+- Weights should be large enough to propagate information efficiently and also small enough to make the model more robust for generalization.
+
+Choosing the mean:
+- The weights can be intrepreted as how much units interact with each other:
+    - if the initial weight is high we put a prior on which units should interact
+    - It is a good idea to initialize the weights around zero, without making them too small.
+
+Some euristics is initialize the weights of a fully connected layer with m inputs and n outputs  by sampling the weights from:
+
+![](img/uniform-weights.png){ width=50% }
+
+**Sparse initializzation**:
+
+- If we have a huge layer normalized initialization yields very low weights
+- It has been proposed to have exactly k non-zero weights at each layer.
+- This helps to keep higher values and increases diversity but it puts a strong prior on some connections and it may take a long time to fix wrong priors.
+
+**Orthogonal matrices**:
+
+I don't know, it exists, it apparently helps to avoid vanishing gradients.
+
+#### Bias initialization
+
+Easier than initializing weights:
+
+- Common to initialize them as zero
+- Sometimes other constants are used:
+    - for output units it may be beneficial to initialize them according to the margianl statistics of the output
+    - to avoid saturation use 0,1
