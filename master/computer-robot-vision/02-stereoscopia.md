@@ -223,7 +223,7 @@ $$
 \overline{p_r}^T \cdot M_r^T \cdot E \cdot M_l^{-1} \overline{p_l} = 0
 $$
 
-La matrice $F = \cdot M_r^T \cdot E \cdot M_l^{-1}$ è detta **matrice fondamentale**.
+La matrice $F = \cdot M_r^T \cdot E \cdot M_l^{-1}$ è detta **matrice fondamentale**, (matrice $3 \times 3$)
 
 Quindi la linee epipolare si può esprimere come $\overline{u_r} = F \cdot \overline{p_l}$.
 
@@ -236,4 +236,19 @@ Metto insieme le osservazioni in una _matrice delle osservazioni_.
 Scriviamo tante volte l'equazione $\overline{p_r}^T \cdot F \cdot \overline{p_l} = 0$ tante volte quante le corrisponenze trovate.
 
 Sia $A$ la matrice $n \times 9$ la matrice delle osservazioni, con $n$ numero di corrispondenze trovate.
+
+Per ridurre i problemi di instabilità numerica possiamo sottrarre la media ad ogni punto immagine per centrarli in zero.
+
+L'effetto delle imprecisoni nasconde la natura del problema, in cui avremmo un sistema sovradeterminato (bloccato con 1 fattore di scala).
+
+Usiamo la decomposizione **SVD**.
+Decomponendo una matrice otteniamo $B = UDV^T$. La $D$ è una matrice diagonale che contiene i valori singolari. Per trovare la soluzione al sistema sovradeterminato possiamo fare la decomposizione SVD della matrice $A$, e troveremo la suluzione nella colonna di $V$ corrispondente al solo valore singolare nullo di $A$. In questo modo troviamo $F$ ma non è detto che sia "giusta". Sappiamo che $F$ deve essere singolare, ossia avere grado 2 e determinante 0, in quanto nel prodotto da cui la troviamo c'era $S$.
+
+Esiste una variante della SVD in cui i valori di $D$ sono ordinati dal più grande al più piccolo.
+Posso associare la non singolarità del più piccolo valore singolare al rumore, ipotizzando che il
+rapporto segnale/rumore sia maggiore di 1 (e quindi che il rumore sia poco influente).
+Trovo la $F$, la decompongo ed azzero in $D$ l'ultimo valore, trovando la nuova matrice $F'$.
+
+
+
 
