@@ -141,6 +141,99 @@ Vincoli più "geometrici":
 - Aumentare il numero di camere per avere vincolo epipolare plurioculare. Ad esempio con 3 camere.
 Dall'intersezione in $\pi3$ della linea epipolare coniugata che viene da $l1$ e $l2$ trovo un punto (o meglio, un'area intorno a quel punto) in $\pi3$ dove dovrebbe esserci il match. Approccio poco utilizzato attualmente.
 
-
 ## Geometria epipolare
+
+Piccola nota introduttiva: faremo tutto il casino che segue in questa sezione per avere un modo facile di trovare la linea epipolare, che ci semplifica il lavoro di ricerca delle corrispondenze.
+
+![](img/geometria-epipolare.png){ width=100% }
+
+- $P_l$ e $P_r$ sono vettori $[X, Y, Z]$ che si riferiscono allo stesso punto 3D, con $P$ pensato come il vettore rispettivamente nel frame left e right,
+- $T$ è la baseline 
+- $R$ è la rotazione tra il sistema intrinseco right e il sistema intrinseco left.
+
+Dato un punto $P$ nello spazio abbiamo:
+
+$$
+P_r = R(P_l - T)
+$$
+
+La relazione tra il punto mondo e il punto immagine è: 
+
+$$
+p_x = \frac{f_x}{z_x} P_x
+$$
+
+con $p_x$ punto immagine, $x = l,r$.
+
+### Piano epipolare
+
+Il piano epipolare è caratterizzato dal fatto che i vettori $P_l, T, (P_l - T) = P_r$ giacciono sullo stesso piano:
+
+$$
+(P_l - T)^T \cdot T \times P_l = 0
+$$
+
+che possiamo scrivere anche (vista la relazione tra $P_l$ e $P_r$) come:
+
+$$
+(R^T P_r)^T T \times P_l = 0
+$$
+
+sapendo che il prodotto tra vettori può essere riscritto come una matrice otteniamo $T \times P_l = SP_l$ dove $S$ è
+
+$$
+ \begin{bmatrix}
+  0 & -T_z & T_y \\
+  T_z & 0 & -T_x  \\
+  -T_y & T_x & 0
+  \end{bmatrix}
+$$
+
+Notiamo la diagonale fatta di 0, la matrice non ha rango massimo.
+La relazione $(R^T P_r)^T T \times P_l = 0$, sapendo che il prodotto di due matrici trasposto può essere riscritto come il prodotto del secondo termine trasposto per il primo termine trasposto, diventa:
+
+$$
+P_r^T \cdot R \cdot S \cdot P_l = 0
+$$
+
+### Matrice essenziale
+
+La matrice $R \cdot S$ è detta la **Matrice Essenziale**.
+È la composizione di cambio di rotazione e cambio di posizione delle due camere.
+
+$$
+P_r^T \cdot E \cdot P_l = 0
+$$
+
+dividendo per $Z_r, Z_l$:
+
+$$
+p_r^T \cdot E \cdot p_l = 0
+$$
+
+$u_r = E \cdot p_l$ è la linea nel piano r che passa per il punto $p_r$ e l'epipolo $e_r$.
+
+Chiamiamo $M_l, M_r$ le matrici dei parametri intrinseci delle due camere, chiamiamo $\overline{p_l}, \overline{p_r}$ le coordinate in pixel dei punti $p_l, p_r$ nel sistema camera. Quindi abbiamo la relazione $\overline{p_l} = M_l \cdot p_l$, da cui ricaviamo $p_l = M_l^{-1} \cdot \overline{p_l}$, (la stessa cosa vale per il right).
+
+### Matrice fondamentale
+
+Ora che abbiamo una relazione tra punto immagine e matrice degli intrinseci della camera possiam riscrivere la relazione tra i punti e matrice essenziale come:
+
+$$
+\overline{p_r}^T \cdot M_r^T \cdot E \cdot M_l^{-1} \overline{p_l} = 0
+$$
+
+La matrice $F = \cdot M_r^T \cdot E \cdot M_l^{-1}$ è detta **matrice fondamentale**.
+
+Quindi la linee epipolare si può esprimere come $\overline{u_r} = F \cdot \overline{p_l}$.
+
+### Algoritmo 8 punti
+
+Consente di determinare la matrice fondamentale avendo a disposizione 8 punti sull’immagine primaria e i relativi punti sull’immagine secondaria. Con un numero di punti maggiore a 8 si ottiene un sistema sovradeterminato.
+Problema delicato per problemi con risoluzioni di matrici, con implementazione standard ai minimi quadrati l'algoritmo non funziona.
+
+Metto insieme le osservazioni in una _matrice delle osservazioni_.
+Scriviamo tante volte l'equazione $\overline{p_r}^T \cdot F \cdot \overline{p_l} = 0$ tante volte quante le corrisponenze trovate.
+
+Sia $A$ la matrice $n \times 9$ la matrice delle osservazioni, con $n$ numero di corrispondenze trovate.
 
