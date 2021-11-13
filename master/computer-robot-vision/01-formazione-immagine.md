@@ -151,6 +151,13 @@ Questo problema aumenta all'aumentare della lunghezza dell'ottica.
 
 ## Calibrazione della proiezione
 
+Abbiamo due problemi legati alla calibrazione della proiezione:
+
+- i parametri intrinseci della camera
+- i parametri estrinseci, ovvero la pose della camera rispetto al mondo 
+
+Analizziamo i problemi legati ai parametri intrinseci.
+
 Rappresentazione in forma matriciale della proiezione con uso di coordinate omogenee.
 
 Tornando alla proiezione del modello pin hole avevamo che:
@@ -162,7 +169,7 @@ v = f*(Y/Z)
 \end{cases}
 $$
 
-Se abbiamo punto immagine $P^C$ ovvero il punto immagine in coordinate omogenee $|w_1, w_2, w_3, w_4|^T$ rispetto alla camera, possiamo trovare una matrice di dimensioni (3,4) tale che $M*P^C = |w_1, w_2, w_3|^T$, e possiamo dire che: 
+Se abbiamo punto $P^C$ ovvero il punto mondo in coordinate omogenee $|w_1, w_2, w_3, w_4|^T$ rispetto alla camera, possiamo trovare una matrice di dimensioni (3,4) tale che $K*P^C = |w_1, w_2, w_3|^T$, e possiamo dire che: 
 
 $$
 \begin{cases}
@@ -192,16 +199,23 @@ f & 0 & 0 & 0 \\
 \end{bmatrix}
 $$
 
-Se abbiamo anche la matrice $T^C_W$ che rappresenta la rototraslazione della camera rispetto al mondo possiamo trovare la proiezione rispetto al mondo:
+E troviamo quindi il punto sull'immagine corrispondente al punto mondo.
 
 $$
-M \cdot T^C_W
+p = M*P^C
 $$
+
+TODO 
+Notiamo inoltre che la lunghezza focale utilizzata nella matrice degli intrinseci deve essere espressa in pixel, mentre solitamente nelle specifiche della camera è espressa in millimetri. Sapendo la dimensione di un pixel possiamo trovare:
+
+$f [pixels] = \frac{(focal length [mm])}{(pixel pitch [\mu m / pixel])}$
+
 
 Problemi ancora aperti:
 
-- centro immagine spostato
+- centro immagine spostato rispetto al centro di proiezione.
 - aspect ratio non unitario: dobbiamo posizionare correttamente il valore di posizione in memoria nel piano immagine continuo. Dovuto alla disposizione degli elementi sensoriali e la loro spaziatura su asse x e y.
+- non perpendicolarità tra righe e colonne di pixel, ovvero lo *skew*, anche se normalmente è 90°
 
 Per il primo punto abbiamo una pura tralsazione, per il secondo troviamo il rapporto tra la spaziatura sulle x e la spaziatura sulle y.
 
@@ -212,6 +226,7 @@ $$
 0 & 0 & 1 \\
 \end{bmatrix}
 $$
+
 Per il secondo abbiamo una matrice per scaling
 $$
 \begin{bmatrix}
@@ -221,6 +236,39 @@ ar & 0 & 0 \\
 \end{bmatrix}
 $$
 
+Per il terzo abbiamo un singolo parametro 
+$$
+\begin{bmatrix}
+1 & s & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1  \\
+\end{bmatrix}
+$$
+
+Moltiplicando tra loro le matrici troviamo la matrice degli intriseci, comunemente chiamata $K$:
+
+$$
+K = 
+\begin{bmatrix}
+ar*f & s & u_0 \\
+0 & f & v_0 \\
+0 & 0 & 1 \\
+\end{bmatrix}
+$$
+
+
+Se abbiamo anche la matrice $T^C_W$ che rappresenta la rototraslazione della camera rispetto al mondo possiamo trovare la proiezione rispetto al mondo:
+
+$$
+K \cdot T^C_W
+$$
+
+infatti 
+
+$$
+T^C_W * P^W = P^C
+$$
+
 Moltiplicando tutte le matrici viste troviamo la matrice di proiezione totale.
 Per scrivere la matrice totale abbiamo bisogno di 10 parametri:
 
@@ -228,9 +276,10 @@ Per scrivere la matrice totale abbiamo bisogno di 10 parametri:
 - 1 (ovvero $f$) per la matrice che proietta il punto
 - 2 per la traslazione del centro immagine
 - 1 per l'aspect ratio 
+- 1 per lo skew
 
 La matrice totale è una (3,4), ovvero ha 12 elementi, di cui 11 indipendenti in quanto stiamo usando matrici per trasformazioni omogenee.
-Noi abbiamo trovato solo 10 parametri, l'11-esimo sarebbe lo "skew" ovvero l'angolo tra righe e colonne dell'immagine, ma questo (grazie a dio) è sempre 90° (zero skew).
+
 
 ### Calibrazione DLT (Direct Linear Transform)
 
