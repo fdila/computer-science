@@ -10,6 +10,7 @@ Linea che congiunge i due centri della camera: **baseline**. Più le camere sono
 Tutto il piano identificato da puntomondo - centro camera 1 - centro camera 2 si chiama **piano epipolare**.
 
 Problemi da affrontare per ricostruzione con stereoscopia:
+
 - Abbiamo misure su piano immagine, informazioni sulle camere, dobbiamo intersecare P'C1 e P''C2. Problema triangolazione.
 - Ricerca delle corrispondenze dei punti mondo nei due piani immagine.
 
@@ -17,7 +18,9 @@ Per la ricerca delle corrispondenze posso identificare un piano immagine come pr
 Poi faccio viceversa e confronto le corrispondenze.
 Ricerca molto complessa.
 
-**Ipotesi fondamentale stereoscopia**: vado a cercare un intorno di P' circa uguale a un intorno di P''
+Per la ricostruzione abbiamo che possiamo ricavarla dalla disparity, ovvero una volta trovate le corrispondenze troviamo la differenza $d = x_l - x_r$ e troviamo quindi la profondità $Z = f*\frac{T}{d}$, dove $T$ è la baseline.
+
+**Ipotesi fondamentale stereoscopia**: Gli intorni di uno stesso punto nelle due immagini saranno circa simili. Vado a cercare un intorno di P' circa uguale a un intorno di P'' per la ricerca delle corrispondenze.
 
 Tanto più è ampia la baseline più è a rischio questa ipotesi: più è ampia più cambio punto di vista e rischio di non trovare agevolmente le corrispondenze.
 

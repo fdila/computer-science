@@ -29,3 +29,6 @@ Chiedere:
 
 - Differenza aberrazioni/distorsioni
 
+## 17.11.2021
+
+- per algoritmo 8 punti facciamo sistema sovradererminato o usiamo RANSAC?

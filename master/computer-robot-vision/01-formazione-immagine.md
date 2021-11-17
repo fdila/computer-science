@@ -346,7 +346,7 @@ NB sezione fatta mooolto poco, il prof voleva quasi tagliarla, basta sapere che 
 Immagini utilizzate: target planare, solitamente scacchiera. 
 Vengono determinati i punti di intersezione tra quadrati neri e quadrati bianchi.
 Non fornisco l'informazione rispetto ad un unico sistema di riferimento.
-Ciascun insieme di punti è noto nel suo sistema di riferimento (ovvero la scacchiera).
+Ciascun insieme di punti è noto nel suo sistema di riferimento (ovvero la scacchiera, solitamente lo posizioniamo in corrispondenza del primo _corner_ trovato).
 
 La tecnica Zhang lavora in 2 fasi. Inizialmente determina i parametri intrinseci, utilizzando le diverse immagini raccolte.
 Dopo di che posso trovare gli estrinseci.
@@ -360,13 +360,13 @@ Caratteristiche della matrice M di proiezione:
 $$
 M = 
 \begin{bmatrix}
-a_{1,1} & a_{1,1} & a_{1,1} & b_1 \\
-a_{1,1} & a_{1,1} & a_{1,1} & b_2 \\
-a_{1,1} & a_{1,1} & a_{1,1} & b_3 \\
+a_{1,1} & a_{1,2} & a_{1,3} & b_1 \\
+a_{2,1} & a_{2,2} & a_{2,3} & b_2 \\
+a_{3,1} & a_{3,2} & a_{3,3} & b_3 \\
 \end{bmatrix}
 $$
 
-Se chiamiamo $A$ la matrice composta dagli $a_{i,j}$ si ha sempre che:
+Se chiamiamo $A$ la matrice composta dagli $a_{i,j}$ e $a_i$ le righe i-esime si ha sempre che:
 
 $$
 det(A) \neq 0
