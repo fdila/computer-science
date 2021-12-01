@@ -127,9 +127,9 @@ Per questo vado a cercare feature in immagini con meno frequenze etc etc come gi
 ### Rettificazione
 Come già detto si possono rettificare le immagini per portarmi ad una situazione in cui le due camere sono allineate. Elimino effetti di non allineamenti degli assi ottici.
 
-### Vincoli usati in stereoscopia
+### Vincoli usati in stereoscopia per fare match tra le immagini
 
-1. Unicità: ad un punto nella primaria associo UN punto nella secondaria. Le corrisponenze sono biunivoche. TODO non univocità dei match?? Come è possibile?
+1. Unicità: ad un punto nella primaria associo UN punto nella secondaria. Le corrisponenze sono biunivoche.
 
 2. Continuità: ipotizzo che il mondo che osservo sia fatto da superfici smooth/regolari. Non riusciamo bene a gestire il mondo discontinuo?
 

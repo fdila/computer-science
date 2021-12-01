@@ -31,4 +31,19 @@ Chiedere:
 
 ## 17.11.2021
 
-- per algoritmo 8 punti facciamo sistema sovradererminato o usiamo RANSAC?
+- per algoritmo 8 punti facciamo sistema sovradererminato o usiamo RANSAC? Glielo chiederò in un futuro lontano
+- Esame: 3/4 domande di teoria + un esercizio 2D.
+- Disparity gradient: al crescere del gradiente ammesso della disparità è crescente l'angolo della zona ammessa.
+- posso fare anche scelta globale dei match
+- disc preserving: anisotropic diff e steerable filt.
+
+## 24.11.2021
+
+Spostamento <-> controllo? Ma sono dati sensoriali anche loro.
+
+## 1.12.2021
+
+- NB per i posteri: a fine lezione su kalman1 parla della figura senza mostrarla a schermo, la figura in questione sul libro è la 3.2, io lo scriverei da qualche parte
+
+
+
