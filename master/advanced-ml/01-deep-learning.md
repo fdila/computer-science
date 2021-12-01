@@ -33,15 +33,16 @@ The auto-encoder wants to encode the stuff, ignoring the noise.
 
 When we have $x$ data and we eant to find $f(x)$ we can also try to map $x$ to a linear space with a $\phi$ function, as seen in SVM using kernels. 
 There are 3 ways to obtain $\phi$:
+
 - Use a predifined $\phi$
 - Write it by hand
 - Learn it! This is what deep learning does
 
 $$
-f(x,\Theta,\omega) = \phi(x, \Theta)^T \omega
+f(x,\theta,\omega) = \phi(x, \theta)^T \omega
 $$
 
-where $\Theta$ are the parameters used to learn $\phi$ from a broad class of functions while parameters $\omega$ map from $\phi(x)$ to the desired output.
+where $\theta$ are the parameters used to learn $\phi$ from a broad class of functions while parameters $\omega$ map from $\phi(x)$ to the desired output.
 
 In deep learning $\phi$ defines a hidden layer.
 
@@ -67,9 +68,9 @@ Each neuron is composed of 2 units:
 
 So the data "enters" the NN, each neuron calculates its output and "transmit" it to the next layer and so on. After this we can find the output signal of our network and compare it to the desired output (the target). We then make adjustements based on the error.
 
-We than do the actual backpropagation which allows us to calculate the **gradient** for each parameter by backpropagating the error and applying the chain rule.
+We then do the actual backpropagation which allows us to calculate the **gradient** for each parameter by backpropagating the error and applying the chain rule.
 We can think of the gradient as a vector which tells us how much each parameter influences the cost function. 
-Each parameter gets updated based on the gradient by adding the gradient multiplied by the learning rate to the previous parameter.
+Each parameter gets updated based on the gradient by subtracting the gradient multiplied by the learning rate to the previous parameter.
 
 ## Gradient based learning
 
@@ -493,6 +494,7 @@ Biases are usually chosen heuristically.
 - Weights should be large enough to propagate information efficiently and also small enough to make the model more robust for generalization.
 
 Choosing the mean:
+
 - The weights can be intrepreted as how much units interact with each other:
     - if the initial weight is high we put a prior on which units should interact
     - It is a good idea to initialize the weights around zero, without making them too small.

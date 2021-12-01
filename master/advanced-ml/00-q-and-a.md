@@ -355,3 +355,117 @@ The third answer is ambiguous (as usual). Prof says it's true anyway.
     - [ ] smaller weights propagate information more efficiently
     - [ ] large weights make the model more likely to reach solutions with good generalization property
     - [x] small weights make the model more robust
+
+# 2 partial exam
+
+- **Convolution is**
+
+    - [ ] local in space, local in depth
+    - [x] local in space, full in depth
+    - [ ] full in space, local in depth
+    - [ ] full in space, full in depth
+
+- **Given the input volume with size H * W * K and a filter bank with size h * w * k we want to convolve them. The size of the output volume will be:**
+
+    - [ ] H  * W * K
+    - [ ] h * w * k
+    - [ ] (H - h + 1) * (W - w + 1) * k
+    - [ ] (H - h - 1) * (W - w - 1) * k
+    - [x] (H - h + 1) * (W - w + 1) * 1
+    - [ ] (H - h - 1) * (W - w - 1) * 1
+
+- **How many channels (i.e. depth size) will have the output volume resulting from the convolution of an input volume with 16 channels (i.e. depth=16) with a filter bank of 16 filters?**
+
+    - [ ] 1
+    - [x] 16
+    - [ ] 32
+
+- **Given the input and the filter compute the convolution**
+
+- **Compute the output after the applicationof max-pooling with neighborhood of size = 2 and stride = 2 to the input volume**
+
+- **Which are common techniques to reduce overfitting?**
+
+    - [x] Weight decay
+    - [ ] Local response normalization
+    - [x] Data augmentation
+    - [ ] Data normalization
+    - [x] Dropout
+
+- **In data augmentation we have seen different policies (e.g. cropping, rotation, color cast, vignetting...)**
+
+    - [ ] All policies are safe to use to any problem
+    - [x] Only a subset of policies is safe to be used for each problem
+
+- **We can diagnose the training and understand if we are overfitting:**
+
+    - [ ] By plotting the loss on the training set across epochs
+    - [ ] By plotting the loss on the validation set across epochs
+    - [ ] By plotting the loss on the test set across epochs
+    - [x] By plotting the accuracy on the training and validation sets across epochs
+
+- **We can continue adding layers to a NN and we will continue to obtain better results**
+
+    - [ ] Yes
+    - [x] No
+
+- **GoogLeNet (i.e. Inception-v1) introduced the use of auxiliary classifiers:**
+
+    - [x] To mitigate the problem of vanishing gradients
+    - [ ] To perform multi-task classification
+    - [ ] To reduce overfitting
+
+- **ResNets were able to train a model with 150+ layers by:**
+
+    - [ ] Using just one fully-connected layer
+    - [x] Introducing the residual connections
+    - [ ] Using just 3x3 convolutional filters
+
+- **If we have few data:**
+    - [ ] We cannot use Deep Learning
+    - [x] We can still use deep learning
+
+- **From which layer we can extract activations to be used as features to classify data for a new small dataset that is similar to the dataset used to pre-train the whole network?**
+
+    - [ ] Conv1
+    - [ ] Conv2
+    - [ ] Conv3
+    - [ ] Conv4
+    - [ ] Conv5
+    - [x] FC6
+    - [x] FC7
+    - [ ] FC8
+
+- **Model compression is only used to allow models to run on mobile devices**:
+
+    - [ ] True
+    - [x] False
+
+- **Which is not a model compression technique?**
+    
+    - [ ] Weight sharing
+    - [ ] Network pruning
+    - [ ] Low rank matrix decomposition
+    - [x] Dropout
+    - [ ] Knowledge distillation
+    - [ ] Quantization
+
+- **Magnitude weight pruning removes the weights having:**
+    
+    - [ ] The lowest value
+    - [x] The lowest absolute value
+    - [ ] The highest absolute value
+    - [ ] The highest value
+
+- **Structured pruning**
+
+    - [x] Aims to preserve network density for computational efficiency
+    - [ ] Aims to increse network sparsity for computational efficiency
+
+- **Low rank matrix decomposition is particularly useful in:**
+
+    - [ ] Convolutional layers
+    - [ ] Pooling layers
+    - [x] Fully connected layers
+
+- **
