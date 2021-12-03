@@ -83,4 +83,68 @@ $$
 X = \frac{X - \mu}{\sigma}
 $$
 
+## Training CNNs
+
+Regularization:
+
+- Weight decay
+- Dropout: usually not used for convolutional layers
+- Data augmentation: flipping, cropping, color casting, geometric distortion
+
 ## CNN Architectures
+
+### LeNet (LeNet-5)
+First CNN (1998)
+
+### AlexNet
+First CNN that won ImageNet challange.
+
+Large conv filter in the beginning.
+
+### VGG
+
+Family of NNs.
+
+Just 3x3 conv filters.
+
+A stack of 3x3 conv filters has the same receptive field as one 7x7.
+It makes the CNN deeper, with more non-linearities and fewer parameters.
+
+### GoogLeNet (Inception)
+
+Design a good local network topology (network within a network) and then stack multiple times this blocks
+
+Use 1x1 conv layers as **bottlenecks** to reduce feature depth
+
+We use 9 inception modules stacked on top of each other.
+2 auxiliary classifiers to inject additional gradients at lower layers to avoid the vanishing gradient problem.
+  
+### ResNet
+
+Deeper model usually perform better but we can't keep adding layers because deeper models are harder to optimize (e.g. the vanishing gradient problem).
+
+The resnet solution is to use network layers to fit a residual mapping instead of directly trying to fit a desired underlying mapping.
+
+So there are some connection between some layer and a deeper layer so that the gradient can "skip"
+
+- Stack **residual blocks**
+- Every residual block has two 3x3 conv layers
+- For deeper nets use bottleneck layers to improve efficiency
+- Periodically double the number of filters and downsample using a stride of 2 (using a conv layer with stride 2 halves the dimension, using a maxpool layer would be computationally inefficient)
+- A lot of small conv layers with 2 final fully connected layers
+
+## Transfer learning
+
+It's common to use a pretrained CNN which has been trained on a very large dataset and then use the CNN either for fine tuning or as a fixed feature extractor for the task of interest.
+
+_How to decide which type of TL to perform?_
+
+- New dataset is small and similar to the original dataset: train a linear classifer on CNN features from higher layers
+
+- New dataset is large and similar to the original dataset: fine tune the CNN
+
+- New dataset is small but very different from the original dataset: train a linear classifier on CNN features from lower layers
+
+- New dataset is large and very different from original dataset: train CNN from scratch or fine tune it
+
+
