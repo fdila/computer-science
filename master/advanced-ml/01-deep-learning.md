@@ -521,3 +521,4 @@ Easier than initializing weights:
 - Sometimes other constants are used:
     - for output units it may be beneficial to initialize them according to the margianl statistics of the output
     - to avoid saturation use 0,1
+
