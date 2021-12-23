@@ -468,4 +468,117 @@ The third answer is ambiguous (as usual). Prof says it's true anyway.
     - [ ] Pooling layers
     - [x] Fully connected layers
 
-- **
+- **RNNs are a family of neural networks for processing sequential data:**
+
+    - [x] True
+    - [ ] False
+
+- **The computation in most RNNs can be decomposed in 3 blocks of parameters and associated transformations**:
+
+    - [x] From the input to the hidden state
+    - [ ] From the hidden state to the input
+    - [x] From the previous hidden state to the next hidden state
+    - [ ] From the next hidden state to the previous hidden state
+    - [x] From the hidden state to the output
+    - [ ] From the output to the hidden state
+
+- **What is the name of the algorithm used to train RNNs?**
+    
+    - [ ] Backpropagation
+    - [ ] Backpropagation through recurrency
+    - [x] Backpropagation through time
+
+- **Vanishing gradients are more easy to identify than exploding gradients**
+
+    - [ ] True
+    - [x] False
+
+- **Exploding gradients are more difficult to handle than vanishing gradients**
+
+    - [ ] True
+    - [x] False
+
+- **Vanishing gradients**
+
+    - [x] Bias the parameters to capture short-term dependencies
+    - [ ] Bias the parameters to capture long-term dependencies
+
+- **Gated RNNs are based on the idea of creating paths throught time that have derivatives that neither vanish nor explode**
+
+    - [x] True
+    - [ ] False
+
+- **LSTMs have the following gates:**
+
+    - [x] Input gate
+    - [ ] Remember gate
+    - [ ] Recurrent gate
+    - [x] Forget gate
+    - [x] Output gate
+    - [ ] Hidden gate
+
+- **GRUs have**
+
+    - [x] significally less parameters than LSTMs
+    - [ ] significally more parameters than LSTMs
+
+- **Federated learning aims to:**
+
+    - [x] Collaboratevly train a ML model
+    - [ ] Indipendently train a ML model
+
+- **In federated learning, the data**
+
+    - [ ] is shared across parties/server
+    - [x] is kept private
+
+- **In federated learning**
+
+    - [ ] We control how the data is distributed across parties/workers
+    - [x] Data in each party/worker is not indipendentent and identically distributed
+
+- **In federated learning there is always a server to orchestrate the training**
+
+    - [ ] True
+    - [x] False
+
+- **In the FedAVG algorithm the central model is updated**
+
+    - [ ] Taking the minimum value of the parameters in the corrisponding layers across the models sent by the different workers
+    - [x] Taking the mean value of the parameters in the corrisponding layers across the models sent by the different workers
+    - [ ] Taking the median value of the parameters in the corrisponding layers across the models sent by the different workers
+    - [ ] Taking the maximum value of the parameters in the corrisponding layers across the models sent by the different workers
+
+- **GANs**
+
+    - [x] learn to sample from the training set
+    - [ ] learn to generate data from the training set
+    - [ ] learn to interpolate the data in the training set
+
+- **GANs are composed of two models called:**
+
+    - [ ] Interpolator
+    - [ ] Classificator
+    - [x] Discriminator
+    - [ ] Creator
+    - [x] Generator
+    - [ ] Inventor
+
+- **The key layer in the generator is**
+
+    - [ ] Canonical convolution
+    - [ ] Inverted convolution
+    - [ ] Interpolated convolution
+    - [x] Transposed convolution
+    - [ ] Dilated convolution
+
+- **During the update of the Discriminator, the gradients flow through the Generator**
+    
+    - [ ] True
+    - [x] False
+
+- **During the update of the Generator, the gradients flow through the Discriminator**
+    
+    - [x] True
+    - [ ] False
+
