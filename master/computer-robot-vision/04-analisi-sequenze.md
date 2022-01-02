@@ -104,9 +104,9 @@ Il problema dell'apertura si verifica in quanto guardiamo il gradiente soltanto 
 
 _Il componente del campo di moto in direzione ortogonale al gradiente spaziale non è vincolato dall'equazione di costanza luminanza immagine_
 
-TODO non ho capito cos'è questa apertura dal punto di vista matematico.
+(Nella pratica abbiamo un'equazione e due incognite quindi non riusciamo a trovare una soluzione unica ma una retta nel sistema (u,v). L'unico punto su questa retta che possiamo trovare con certezza è il componente normale)
 
-Maybe? https://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL_COPIES/OWENS/LECT12/node4.html
+![](img/apertura.png){ width=40% }
 
 ### Metodi differenziali per stima dell'optical flow
 
@@ -120,6 +120,21 @@ Faccio un sistema con tutti i punti e vado a trovare il campo di movimento che m
 
 ### Metodi matching
 
-Abbiamo più frame, quindi si dice che facciamo **feature tracking**.
+Metodo feature matching puro: uso due immagini consecutive e faccio match tra le feature, come in stereo.
 I punti feature vengono anche chiamati **key points**.
+Per descrivere i key points esistono dei descrittori, come SIFT, SURF, ORB...
+
+Abbiamo più frame, quindi possiamo usare metodi di  **feature tracking**.
+
+Non facciamo soltanto match con i descrittori ma prendiamo in considerazione anche il movimento.
+Facciamo delle previsioni in base alle posizioni precedenti.
+
+Si usano vari tipi di filtraggio, tra cui Kalman.
+
+Quindi non ci interessa solo la posizione del punto, ma anche la sua velocità. Le camere non misurano velocità ma possiamo avere una stima di velocità facendo derivate su spazio, ma è tutto rumoroso.
+
+I problemi del filtraggio sono 2:
+
+1. **Missing information**: tutti i modelli bayesiani si basano sul fatto che io possa fornire dei valori probabilistici da usare nel modello. Devo avere il modello del sistema con la sua covarianza, il modello di misura con la sua covarianza e la stima iniziale dello stato, con la sua covarianza.
+2. **Data association**: problema di fare matching.
 
