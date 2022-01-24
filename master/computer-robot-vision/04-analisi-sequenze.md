@@ -18,7 +18,7 @@ La "baseline" è piccola, la qualità di ricostruzione è pessima se guardiamo s
 
 **Time to impact**: da sequenza troviamo il tempo mancante per andare a sbattere contro un certo ostacolo andando a guardare come varia la dimensione dell'ostacolo.
 
-**Analgie con problemi stereo**:
+**Analogie con problemi stereo**:
 
 - Problema corrispondenze: trovare quali elementi di un frame corrispondono a quali elementi del frame successivo.
 - Ricostruzione: dato un certo numero di elementi corrispondenti (e eventualmente i parametri intrinseci della camera) cosa possiamo dire sul movimento 3d e sulla struttura del mondo osservato=
@@ -64,7 +64,7 @@ Come modifica la posizione del punto immagine (statico) quando l'osservatore eff
 
 Nei primi due casi abbiamo un campo movimento radiale: è fatto da vettori che "radiano" dal punto "vanishing".
 
-TODO motion parallax? epipolo all'infinito?
+motion parallax? epipolo all'infinito? NON TROPPO IMPORTANTE
 
 ## Optical flow e quazione costanza luminanza immagine
 
@@ -137,4 +137,5 @@ I problemi del filtraggio sono 2:
 
 1. **Missing information**: tutti i modelli bayesiani si basano sul fatto che io possa fornire dei valori probabilistici da usare nel modello. Devo avere il modello del sistema con la sua covarianza, il modello di misura con la sua covarianza e la stima iniziale dello stato, con la sua covarianza.
 2. **Data association**: problema di fare matching.
-
+ 
+TODO "problema degli outliers in data association, robust statistics, least median of squares, estimator breakdown point, algortimo RANSAC" 
