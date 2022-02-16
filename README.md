@@ -36,3 +36,4 @@ Below you can find the link to some projects I did for various courses.
 ### 2 year
 
 - [Point Cloud Classification using Deep Neural Networks](https://github.com/fdila/point-cloud-classification-report): in-depth study for the course **Advanced Machine Learning**. A study about the methods deep neural networks use to classify 3D data.
+- [Plate2Art](https://github.com/fdila/plate2art): project for the course **Visual Information Processing and Management**. Python + MATLAB processing of food images and retrivial of art paintings with similar features.
