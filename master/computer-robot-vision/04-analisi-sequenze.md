@@ -138,4 +138,51 @@ I problemi del filtraggio sono 2:
 1. **Missing information**: tutti i modelli bayesiani si basano sul fatto che io possa fornire dei valori probabilistici da usare nel modello. Devo avere il modello del sistema con la sua covarianza, il modello di misura con la sua covarianza e la stima iniziale dello stato, con la sua covarianza.
 2. **Data association**: problema di fare matching.
  
-TODO "problema degli outliers in data association, robust statistics, least median of squares, estimator breakdown point, algortimo RANSAC" 
+## Outliers e come non morire a causa loro
+
+Se ci sono outliers nei dati fare una regressione normale non funziona: la regressione ai minimi quadrati è ottima solo nel caso di rumore gaussiano.
+
+**Definizioni varie:**
+
+- **Efficienza relativa**: rapprorto tra varianza raggiungibile per i parametri stimati e la varianza effettiva fornita dal metodo dato.
+- **Punto di breakdown**: percentuale di outliers che lo stimatore riesce a tollerare nei dati senza perdere precisione nella stima. Nel caso dei minimi quadrati è $1/n$
+
+**Least squares with robust kernels**:
+
+**M-estimation**: non prendo l'errore al quadrato, passo l'errore in un'altra funzione.
+
+$\rho(e)$ usata per definire la PDF: $p(e) = exp(-\rho(e))$
+
+Minimizzo $\sum_i \rho(e_i(x))$
+
+$\rho$ è una funzione simmetrica avente un unico minimo in 0.
+
+**R-estimation**: basati sull'ordinamento dell'insieme dei residui. 
+Minimizzo $\sum_i a_n(R_i)r_i$ dove $R_i$ è il rango del residuo i-esimo e $a_n$ è una funzione monotona che soddisfa la proprietà $\sum_i a_n (R_i) = 0$.
+
+M-stimatori e R-stimatori hanno punti di breakdown equivalenti a $1/(p+1)$, dove $p$ è il numero di parametri della regressione.
+
+**Least Median of Squares**:
+
+LMedS ha un punto di breakdown del 50% e la sua efficienza è intrinsecamente bassa ma può essere incrementata se viene combinato con criteri basati sui minimi quadrati.
+
+Parametri stimati minimizzando la funzione non lineare $med_i r_i^2$, ovvero trova il più piccolo valore del mediano dei quadrati residui per l'intero insieme di dati.
+
+**RANSAC**:
+
+Random Sample Consensus.
+
+1. Modello da stimare richiede almeno $p$ punti per essere instanziato. Ho un set $A$ di punti, estraggo causalmente $p$ punti creando il sottoinsieme $S1$.
+2. Uso $S1$ per instanziare un modello $M1$. Calcolo il subset di punti $S1*$ che rispettano il modello con un errore inferiore a una soglia. $S1*$ è il consensus set di $S1$
+3. Se il numero di elementi di $S1*$ è maggiore di una treshold, che è una funzione del numero di outliers che pensiamo di avere in $A$ usiamo $S1*$ per calcolare un nuovo modello $M1*$
+4. Se il numero di elementi in $S1*$ è minore della soglia ripetere da punto 1.
+
+Se dopo un certo numero di iterazioni non si è trovato un consensus set maggiore della treshold, o uso il set consensus con più elementi o termino con fallimento. La differenza principale di RANSAC e gli stimatori robusti è che gli stimatori robusti cercano di minimizzare una misura di dispersione mentre RANSAC cerca di trovare il più grande set di consensus delle osservazioni.
+
+Brekdown di RANSAC: 50% + 1.
+
+
+
+
+
+
