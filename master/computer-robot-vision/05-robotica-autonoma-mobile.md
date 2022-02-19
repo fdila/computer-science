@@ -103,6 +103,19 @@ Grafo costituito da nodi (pose + mappa) e archi (costraint tra i vari nodi).
 
 ### SLAM PF-based
 
+L'approccio con particle filter usa come vettore di stato pose del robot + mappa, quindi abbiamo $p(x,m)$.
+Trattare così il problema sarebbe impensabile per la complessità computazionale del calcolo delle particelle. Possiamo notare che se sapessimo con esattezza la pose del robot nel mondo potremmo stimare la pose delle feature nel mondo in modo indipendente l'una dall'altra.
+Basandoci su questa osservazione possiamo quindi usare un PF conosciuto come **Rao-Blackwellized**. Questi filtri usano le particelle per rappresentare la postirior di alcune variabili e delle gaussiane (o altre pdf parametriche) per rappresentare altre variabili.
+
+FastSLAM usa le particelle per tenere traccia delle pose, e una gaussiana per ogni feature della mappa. Questo è diverso da EKF-SLAM: in quel caso avevamo una sola gaussiana per stimare la posizione di tutte le feature insieme. Inoltre FastSLAM ha il vantaggio di poter fare diverse data association per ogni particella, avendo quindi più data association e non una singola come in EKF.
+FastSLAM usando particelle che tengono traccia di tutta la storia delle pose risolve sia il problema Full SLAM che Online SLAM.
+
+FastSLAM 2.0 fa il sampling delle poses oltre che usando il controllo usando la misura.
+
+FastSLAM ha problemi con le loop closures (TODO non ho interiorizzato il perchè)
+
+**Grid-based FastSLAM**: GMapping
+
 ### Visual SLAM
 
 ## Approcci DNN per problemi di computer and robot vision
