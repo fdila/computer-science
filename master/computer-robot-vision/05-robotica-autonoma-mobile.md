@@ -118,4 +118,21 @@ FastSLAM ha problemi con le loop closures (TODO non ho interiorizzato il perchè
 
 ### Visual SLAM
 
-## Approcci DNN per problemi di computer and robot vision
+SLAM con camera monoculare. Basato su filtraggio EKF. 
+Problema principale depth dei landmark in quanto con proiezione camera si perde l'info 3D.
+Quando inizializziamo una nuova feature non abbiamo info sulla profondità. Due soluzioni:
+
+- Delayed initialization:per ogni feature setto un insieme di ipotesi e la rappresento con una funzione solo dopo che è
+“collocata”, ovvero dopo un po’ di movimento.Il problema è che queste osservazioni non sono fissate per aggiornare la stima della pose
+della camera fino a che non sono convertite e inizializzate veramente. Dal punto di vista della stima possiamo pensare che tutti i punti (features) all’inizio siano all’infinito e si “avvicinino” nel momento in cui il moto della camera crea una parallasse semplicemente ampia. 
+Per i punti vicini non c’è problema, per quelli lontani potrebbero volercidei metri o dei kilometri. E’ però importante che questi non siano pienamente indicati come all’infinito, ma che in qualsiasi momento, durante il processo di filtraggio, possono “provare” la loro profondità nel momento in cui c’è stato abbastanza moto. E’ necessario trovare una rappresentazione che dica qualcosa anche di questi punti all’infinito, per esempio, dopo tot moti di traslazione della camera posso dire che il punto è almeno a tot metri dalla predizione.
+- Undelayed initialization: tengo il raggio (retta di proiezione) e la depth sconosciuta, con una parametrizzazione, inizializzo feature appena la vedo.
+
+**Monocular SLAM: unified inverse depth**
+Le nuove feature sono inizializzate considerando una sola immagine, l’immagine dove la feature è misurata per la prima volta.
+L’inizializzazione include lo stato iniziale e la covarianza ( [1,inf] ). Data la linearità della parametrizzazione l’incertezza può essere rappresentata con una funzione e processata con EKF. Finché l’incertezza sulla profondità rimane alta la feature è usata principalmente per determinare l’orientamento della camera.
+
+Oggetti lontani: piccolo parallasse, incertezza non gaussiana, usati per stimare l'orientamento.
+Oggetti vicini: grande parallasse, incertezza gaussiana, usati per stimare la traslazione.
+
+**unified inverse depth** parametrization: per ogni feature ho x,y,z della camera nel momento in cui è stata rilevata la feature, i due angoli e l'inverso della distanza. 
