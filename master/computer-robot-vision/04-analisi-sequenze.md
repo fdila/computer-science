@@ -5,6 +5,7 @@ Oltre al campionamento spaziale/intensità abbiamo anche il campionamento tempor
 In generale gli spostamenti di tempo sono piccoli (alta frequenza di campionamento temporale)
 
 Il movimento di un punto in una sequenza di immagini può essere causato:
+
 - dal movimento dell'oggetto nella scena
 - dal movimento della camera
 - entrambi
@@ -21,7 +22,7 @@ La "baseline" è piccola, la qualità di ricostruzione è pessima se guardiamo s
 **Analogie con problemi stereo**:
 
 - Problema corrispondenze: trovare quali elementi di un frame corrispondono a quali elementi del frame successivo.
-- Ricostruzione: dato un certo numero di elementi corrispondenti (e eventualmente i parametri intrinseci della camera) cosa possiamo dire sul movimento 3d e sulla struttura del mondo osservato=
+- Ricostruzione: dato un certo numero di elementi corrispondenti (e eventualmente i parametri intrinseci della camera) cosa possiamo dire sul movimento 3d e sulla struttura del mondo osservato?
 
 **Differenze con problemi stereo**:
 
