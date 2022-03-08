@@ -14,7 +14,7 @@ Veicoli anolomici: omnidirezionali, ruote mechanum/swedish.
 
 ## Modelli per stato robot
 
-Velocity model è meno accurato e viene usato per il motion planning, odometry model è più accurato ma presuppone di aver già effettuato il movimento e quindi non puòò essere usato per il planning.
+Velocity model è meno accurato e viene usato per il motion planning, odometry model è più accurato ma presuppone di aver già effettuato il movimento e quindi non può essere usato per il planning.
 
 ### Velocity Model
 
@@ -22,14 +22,14 @@ Uso i comandi di velocità (velocità di traslazione e di rotazione) per trovare
 
 ### Odometry Model
 
-Suppongo di aver fatto già il movimento e aver misurato le rotazioni. Quindi calcolo l'odometria.
+Suppongo di aver fatto già il movimento e aver misurato le rotazioni delle ruote. Quindi calcolo l'odometria.
 Il movimento è scomposto in 3 movimenti elementari: rotazione, traslazione, rotazione.
   
 ## Sistemi di range sensing
 
 As usual, ci sono problemi a misurare le cose nel mondo. Rumore gaussiano non è realistico.
 
-### Beam Modelgit
+### Beam Model
 
 4 fenomeni:
 
