@@ -17,6 +17,8 @@ Below you can find the link to some projects I did for various courses.
 
 ### 3 year
 - [bachelor-thesis](https://github.com/fdila/bachelor-thesis): my bachelor's thesis, working on microcontrollers to implement the control system for a differential drive robot.
+- [robotics-and-automation-exercises](https://github.com/fdila/robotics-automation-exercises) exercises and projects in MATLAB for the coures **Robotica e Automazione**, for the robotics part I developed some script to deal with rototranslation, for the automation part I developed a control system using Simulink. Note: this repo is private since the exercises are part of the final mark and are used each year, please send me a message if you need the access.
+- [tcdm-exercises](https://github.com/fdila/tcdm-exercises): assignments for the course **Trattamento e Codifica di Dati Multimediali**. MATLAB scripts to deal with various signals, ranging from audio filtering to image processing. Note: this repo is private since the exercises are part of the final mark and are used each year, please send me a message if you need the access.
 
 ## Master
 
@@ -36,4 +38,7 @@ Below you can find the link to some projects I did for various courses.
 ### 2 year
 
 - [Point Cloud Classification using Deep Neural Networks](https://github.com/fdila/point-cloud-classification-report): in-depth study for the course **Advanced Machine Learning**. A study about the methods deep neural networks use to classify 3D data.
+- [advanced-ml-assignments](https://github.com/fdila/advanced-ml-assignments): assignments for the course **Advanced Machine Learning**. Jupyter notebooks about deep neural networks using Keras. Note: this repo is private since the exercises are part of the final mark and are used each year, please send me a message if you need the access.
 - [Plate2Art](https://github.com/fdila/plate2art): project for the course **Visual Information Processing and Management**. Python + MATLAB processing of food images and retrivial of art paintings with similar features.
+- [visual-information-processing](https://github.com/fdila/visual-information-processing): assignments for the course **Visual Information Processing and Management**. MATLAB scripts to process images, ranging from traditional filters to deep neural networks used for classification. Note: this repo is private since the exercises are part of the final mark and are used each year, please send me a message if you need the access.
+- [computer-and-robot-vision](https://github.com/fdila/computer-robot-vision): assignments and lab code for the course **Computer and Robot Vision**. During the course I implemented EFK and particle filters in MATLAB, used SLAM algorithms on point clouds and developed Jupyter Notebooks for camera calibration and stereo reconstruction. Note: this repo is private since the exercises are part of the final mark and are used each year, please send me a message if you need the access.
