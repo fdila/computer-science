@@ -37,7 +37,7 @@ Below you can find the link to some projects I did for various courses.
 
 ### 2 year
 
-- Project and assingments for the course **Advanced Machine Learning":
+- Project and assingments for the course **Advanced Machine Learning**:
     - [Point Cloud Classification using Deep Neural Networks](https://github.com/fdila/point-cloud-classification-report): in-depth study about the methods deep neural networks use to classify 3D data.
     - [advanced-ml-assignments](https://github.com/fdila/advanced-ml-assignments): Jupyter notebooks about deep neural networks using Keras. Note: this repo is private since the exercises are part of the final mark and are used each year, please send me a message if you need the access.
 - Project and assignments for the course **Visual Information Processing and Management**:
